@@ -1,14 +1,14 @@
 ---
-title: "Creating a Shared Exit Pass Template with Auto-Generated Tracking Numbers in Microsoft Word"
+title: "How to Create an Automated Employee Exit Pass Form with Unique Tracking Numbers in Microsoft Word (LAN-Based Setup)"
 date: 2025-10-29 14:00:00 +0800
 categories: [VBA, Microsoft Word]
-tags: [Word, Template, Macro, TrackingNumber, InternalTools, Tutorial, VBA, Automation]
+tags: [Word, Template, Macro, Tutorial, VBA, Automation]
 description: "How to set up a LAN-based Exit Pass form with automatic tracking numbers using Microsoft Word templates (.dotm) — no API required."
 status: "Phase 1 – LAN-based. API integration planned."
 toc: true
 ---
 
-## Introduction
+## 🏢 Introduction
 This guide explains how to create a shared, automated Exit Pass form using Microsoft Word’s template system (`.dotm`). The form automatically generates unique tracking numbers for each request.
 
 The system works over a shared folder accessible to all employees in a local network (LAN). Each employee uses their own copy of the template file, but all share a single counter file that keeps the tracking number sequence in sync.
@@ -32,7 +32,7 @@ This setup is ideal for small to medium-sized organizations without a centralize
 
 ---
 
-## Folder Setup
+## 📁 Folder Setup
 
 ### Shared Network Folder
 Ask your system administrator to create a shared folder accessible to everyone:
@@ -121,8 +121,9 @@ If Word still blocks network paths, Microsoft 365 users must copy the `.dotm` fi
 
 ---
 
-## Understanding the `.dotm` File
+## 🧩 Understanding the `.dotm` File
 ### DOTM vs DOCX
+
 | File Type | Description                                |
 | --------- | ------------------------------------------ |
 | `.docx`   | Standard Word document, no macros allowed. |
@@ -144,7 +145,7 @@ Instead, open Word and choose:
 
 ---
 
-## VBA Macro Logic (Simplified)
+## 💾 VBA Macro Logic (Simplified)
 The macro inside the template does the following:
 1. When a new document is created:
    * Reads the last number from `counter.txt` in the shared folder.
@@ -297,7 +298,8 @@ ErrorHandler:
 End Sub
 ```
 ### File and Bookmark Setup
-Before this macro works properly, make sure your Word form includes:
+Before this macro works properly, make sure your Word form includes:  
+
 | Element         | Description                   | Example Name |
 | --------------- | ----------------------------- | ------------ |
 | Bookmark        | Where tracking number appears | `TrackingNo` |
@@ -348,7 +350,6 @@ To test:
 | New document does not appear  | User opened the `.dotm` directly         | Must create via File → New → Personal                  |
 | Personal tab missing          | No default templates location set        | Add `%appdata%\Microsoft\Templates` in settings        |
 | Tracking number resets        | Using a different `counter.txt` per user | Ensure everyone uses the same shared counter file      |
-
 
 ---
 
