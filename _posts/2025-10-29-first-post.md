@@ -1,6 +1,6 @@
 ---
 title: First Post
-date: 2025-10-29 11:00:00 -0000
+date: 2025-10-28 11:00:00 -0000
 categories: [General, Welcome]
 tags: [first post, introduction]
 ---
