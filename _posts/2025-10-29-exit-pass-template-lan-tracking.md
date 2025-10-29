@@ -339,6 +339,7 @@ To test:
 ---
 
 ## Common Issues and Fixes
+
 | Issue                         | Cause                                    | Solution                                               |
 | ----------------------------- | ---------------------------------------- | ------------------------------------------------------ |
 | Word shows “Security Risk”    | File opened directly from a network      | Copy to local Templates folder or add trusted location |
@@ -347,6 +348,7 @@ To test:
 | New document does not appear  | User opened the `.dotm` directly         | Must create via File → New → Personal                  |
 | Personal tab missing          | No default templates location set        | Add `%appdata%\Microsoft\Templates` in settings        |
 | Tracking number resets        | Using a different `counter.txt` per user | Ensure everyone uses the same shared counter file      |
+
 
 ---
 
