@@ -5,7 +5,7 @@ author: tildemark
 date: 2025-10-28 11:33:00 +0800
 categories: [General, Tutorial]
 tags: [typography]
-pin: true
+pin: false
 math: true
 mermaid: true
 image:
