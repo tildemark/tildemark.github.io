@@ -13,6 +13,22 @@ This guide documents the full setup process for establishing a secure, self-host
 
 ---
 
+## ⭐️ Why Oracle Cloud Infrastructure (OCI)?
+
+When choosing a cloud provider for a permanent, self-hosted development environment, the value proposition of the **Always Free Tier** is paramount. OCI stands out dramatically against competitors like AWS or Google Cloud by offering a truly powerful, enterprise-grade VM at zero cost.
+
+We selected OCI specifically for the **Ampere A1 Compute Instance** (VM.Standard.A1.Flex) because of its unprecedented free resource allocation:
+
+| Resource | OCI Always Free Tier (Arm) | Typical Competitor Free Tier (e.g., AWS EC2 T2.micro) | Advantage |
+| :--- | :--- | :--- | :--- |
+| **CPU Cores** | **4 OCPUs** (4 CPU Cores) | 1 vCPU (often shared/burstable) | **4x More Raw Power** |
+| **RAM** | **24 GB** | 1 GB | **24x More Memory** |
+| **Data Egress** | **10 TB per month** | Usually 1 GB per month | Massive Bandwidth Allowance |
+
+This configuration provides a dedicated, high-performance sandbox that is robust enough to run not just the static blog, but also Portainer, Nginx Proxy Manager, and a full web IDE (Code-Server) simultaneously—all without incurring ongoing charges. This generous resource commitment is the primary reason OCI was chosen as the foundation for this project.
+
+---
+
 ## Phase 1: Oracle Cloud Infrastructure (OCI) and Network Setup
 
 This phase is the backbone of the entire project, ensuring our virtual machine (VM) is properly created and accessible from the internet.
