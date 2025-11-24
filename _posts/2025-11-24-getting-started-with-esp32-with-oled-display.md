@@ -134,6 +134,7 @@ If your display remains black:
 This setup provides a robust foundation for building IoT dashboards, status monitors, or simple games on the ESP32.
 
 Check out the [Demo Video on YouTube](https://www.youtube.com/shorts/dMohdxYCU6c) to see it in action\!
+{% include embed/youtube.html id='dMohdxYCU6c' %}
 
 -----
 
