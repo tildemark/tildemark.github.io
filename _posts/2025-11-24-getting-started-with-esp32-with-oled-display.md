@@ -6,6 +6,9 @@ tags: [esp32, oled, display, i2c, adafruit, platformio]
 pin: false
 math: true
 mermaid: true
+image:
+  path: https://res.cloudinary.com/dxsshynmg/image/upload/esp32-with-oled_gwgll9.webp
+  alt: esp32 with oled display
 ---
 
 Welcome to this guide on connecting a **1.3-inch OLED display (128x64)** to an **ESP32 microcontroller**. This project demonstrates how to set up the hardware, configure the necessary libraries, and get your display running using either Arduino IDE or PlatformIO.
