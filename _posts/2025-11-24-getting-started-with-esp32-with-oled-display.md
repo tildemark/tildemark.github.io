@@ -1,6 +1,6 @@
 ---
 title: Getting Started with ESP32 and 1.3" OLED Display
-date: 2025-11-25 12:00:00 +0800
+date: 2025-11-24 12:00:00 +0800
 categories: [IoT, ESP32]
 tags: [esp32, oled, display, i2c, adafruit, platformio]
 pin: false
