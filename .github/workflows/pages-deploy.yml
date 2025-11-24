@@ -26,9 +26,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      TZ: Asia/Manila
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
