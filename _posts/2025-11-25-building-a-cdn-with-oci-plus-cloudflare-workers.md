@@ -132,7 +132,7 @@ Cloudflare showed a warning on my `mail` record: *"This record exposes the IP ad
 
 ## The Result
 
- ![Final output](https://cdn.sanchez.ph/welcome.webp){: .normal }
+![Final output](https://cdn.sanchez.ph/welcome.webp){: .normal }
 
 
 Now, when I request `https://cdn.sanchez.ph/welcome.webp`:
