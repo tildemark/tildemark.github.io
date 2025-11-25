@@ -7,7 +7,7 @@ pin: false
 math: true
 mermaid: true
 image:
-  path: https://res.cloudinary.com/dxsshynmg/image/upload/esp32-with-oled_gwgll9.webp
+  path: https://cdn.sanchez.ph/blog/esp32-with-oled.webp
   alt: esp32 with oled display
 ---
 

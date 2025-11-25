@@ -5,7 +5,7 @@ categories: [Tutorials, DevOps]
 tags: [oracle cloud, docker, nginx proxy manager, portainer, code-server, postgres, security]
 description: "Unlocking the full potential of Oracle Cloud's Always Free tier: A comprehensive guide to building a secure, self-hosted DevOps stack. Learn how to deploy Nginx Proxy Manager, Portainer, VS Code (Code-Server), and Postgres on ARM64 architecture with full SSL encryption and automated backups."
 image:
-  path: https://res.cloudinary.com/dxsshynmg/image/upload/cloud-dev-environment_vedujk.webp
+  path: https://cdn.sanchez.ph/blog/cloud-dev-environment.webp
   alt: Cloud Architecture
 ---
 
