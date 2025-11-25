@@ -1,7 +1,7 @@
 
 ---
 title: How I Built a Free, Enterprise-Grade CDN with OCI and Cloudflare Workers
-date: 2025-11-26 12:00:00 +0000
+date: 2025-11-25 12:00:00 +0000
 categories: [Tutorial, Devops]
 tags: [cloudflare, oci, cdn, serverless, self-hosting]
 author: [Your Name]
