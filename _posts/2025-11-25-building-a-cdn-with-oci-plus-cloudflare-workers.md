@@ -30,7 +30,9 @@ I created a public bucket in OCI Object Storage.
 * **Visibility:** Public (Objects are publicly readable)
 
 *Note:* OCI recently updated their URL structure to use namespace-specific endpoints. My direct file link looked like this:
-`https://axjnmgygqr0w.objectstorage.us-phoenix-1.oci.customer-oci.com/n/axjnmgygqr0w/b/cdn-bucket/o/welcome.jpg`
+`https://axjnmgygqr0w.objectstorage.us-phoenix-1.oci.customer-oci.com/n/axjnmgygqr0w/b/cdn-bucket/o/welcome.webp`
+
+![File at OCI](https://axjnmgygqr0w.objectstorage.us-phoenix-1.oci.customer-oci.com/n/axjnmgygqr0w/b/cdn-bucket/o/welcome.webp){: .normal }
 
 My goal was to turn that long URL into `https://cdn.sanchez.ph/welcome.jpg`.
 
@@ -130,7 +132,10 @@ Cloudflare showed a warning on my `mail` record: *"This record exposes the IP ad
 
 ## The Result
 
-Now, when I request `https://cdn.sanchez.ph/blog/image.jpg`:
+ ![Final output](https://cdn.sanchez.ph/welcome.webp){: .normal }
+
+
+Now, when I request `https://cdn.sanchez.ph/welcome.webp`:
 
 1.  Cloudflare intercepts the request.
 2.  The Worker rewrites the destination to the deep OCI path.
