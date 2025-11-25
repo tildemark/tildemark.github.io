@@ -14,12 +14,12 @@ timezone: Asia/Manila
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: Syntax & Shutterspeed # the main title
+title: Syntax # the main title
 
-tagline: My journey through code and photography # it will display as the subtitle
+tagline: A digital log of simple fixes and necessary experiments. # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
-  My journey through code and photography
+  A tech blog dedicated to SYNTAX—Simple Yet Necessary Tips And eXperiments. Exploring software solutions, coding best practices, and technical explorations.
 
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
