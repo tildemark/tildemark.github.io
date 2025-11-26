@@ -6,6 +6,9 @@ tags: [Word, Template, Macro, Tutorial, VBA, Automation]
 description: "How to set up a LAN-based Exit Pass form with automatic tracking numbers using Microsoft Word templates (.dotm) — no API required."
 status: "Phase 1 – LAN-based. API integration planned."
 toc: true
+image:
+  path: https://cdn.sanchez.ph/blog/exit-pass-form.webp
+  alt: Exit Pass Form
 ---
 
 ## 🏢 Introduction
