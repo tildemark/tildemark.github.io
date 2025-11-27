@@ -11,39 +11,37 @@ image:
 
 In this deep-dive tutorial, we will walk through the process of transforming an Oracle Cloud Infrastructure (OCI) Always Free ARM instance into a powerful, secure, browser-based Cloud Development Environment (CDE).
 
-By the end of this guide, you will have a server running VS Code in the browser, a hidden Postgres/Redis backend, a web-based database management tool, and a beautiful dashboard to manage your containers—all secured behind free SSL certificates.
+**Why this guide?**
+Most tutorials skip the hard stuff: storage limits, SSH lockouts, and ARM64 compatibility quirks. This guide covers the "Happy Path" *and* the "Disaster Prevention" strategies we learned the hard way.
 
-Here is the stack we are building:
-* **Infrastructure:** OCI Ampere (ARM64) 4 OCPU, 24GB RAM.
-* **OS:** Ubuntu 20.04 LTS.
-* **Reverse Proxy & SSL:** Nginx Proxy Manager (NPM).
-* **Container Management:** Portainer.
-* **IDE:** Code-Server (VS Code).
-* **Database:** PostgreSQL 15 (Hidden internally).
-* **DB GUI:** pgAdmin 4 (Web).
+> **Note on Images:** The images in this post are served via my own private CDN running on OCI Object Storage and Cloudflare Workers. You can read how I built that here: [Building a CDN with OCI + Cloudflare Workers](/posts/building-a-cdn-with-oci-plus-cloudflare-workers/).
+{: .prompt-info }
+
+## The Tech Stack
+* **Infrastructure:** OCI Ampere (ARM64) 4 OCPU, 24GB RAM, **200GB Storage**.
+* **OS:** Ubuntu 22.04 LTS (Jammy).
+* **Gateway:** Nginx Proxy Manager (SSL/HTTPS).
+* **Management:** Portainer.
+* **IDE:** Code-Server (VS Code in browser).
+* **Database:** PostgreSQL 15 + pgAdmin 4.
 * **Cache:** Redis.
-* **Security:** Fail2Ban, OS Firewall, Internal Docker Networking.
-* **Maintenance:** Automated Daily Backups via Cron.
-
-Let's get building.
-
-## Prerequisites
-
-1.  An Oracle Cloud account with access to the Always Free tier.
-2.  A registered domain name (e.g., `yourdomain.com`). In this tutorial, we use `domain.ph` as the example.
+* **Gaming:** Minecraft Paper Server.
+* **Security:** Dual-User Access, Fail2Ban, Internal Networking.
+* **Backups:** Automated Daily Cron.
 
 ---
 
-## Phase 1: OCI Infrastructure Setup
+## Prerequisites
+1. An Oracle Cloud account with access to the Always Free tier.
+2. A registered domain name (e.g., `yourdomain.com`). In this tutorial, we use `domain.ph` as the example.
 
+## Phase 1: OCI Infrastructure Setup
 Before launching a server, we need to lay the networking groundwork.
 
-### 1. Reserve a Public IP
-To ensure our domain records never break, we need a static IP address.
-
-1.  In the OCI Console, go to **Networking** -> **IP Management** -> **Reserved Public IPs**.
-2.  Click **Reserve Public IP Address**. Give it a name (e.g., `cde-static-ip`).
-3.  Note down the IP address you are assigned (e.g., `111.111.111.111`).
+### 1. Networking (The Foundation)
+To ensure our domain records never break, we need a static IP.
+1.  In the OCI Console, go to **Networking** > **IP Management** > **Reserved Public IPs**.
+2.  Reserve a new IP. Note it down (e.g., `141.148.153.48`).
 
 ### 2. Configure the Virtual Cloud Network (VCN) Firewall
 OCI uses "Security Lists" as a firewall outside your VM. We must open HTTP/HTTPS ports.
@@ -57,19 +55,21 @@ OCI uses "Security Lists" as a firewall outside your VM. We must open HTTP/HTTPS
 | 0.0.0.0/0 | TCP | 22 | SSH Access |
 | 0.0.0.0/0 | TCP | 80 | HTTP & Let's Encrypt |
 | 0.0.0.0/0 | TCP | 443 | HTTPS |
+| 0.0.0.0/0 | TCP | 81 | NPM (Temporary)|
 
 {: .prompt-warning }
-**Security Note:** Do not open ports 5432 (Postgres), 6379 (Redis), or 9000 (Portainer) here. We will keep those internal for security.
+**Security Note:** Do not open ports 5432 (Postgres), 6379 (Redis), or 9000 (Portainer) here. We will keep those internal for security. Remove NPM after you set it up from the NPM interface.
 
-### 3. Launch the Instance
-1.  Go to **Compute** -> **Instances** -> **Create Instance**.
-2.  **Image:** Select **Ubuntu 20.04** (or 22.04).
-3.  **Shape:** Select the **Ampere** (VM.Standard.A1.Flex) shape. Max out the OCPUs (4) and RAM (24GB) if you want the full power.
-4.  **Networking (Advanced Options):**
-    * Specify a private IP if you wish (e.g., `10.0.0.196`).
-    * **IMPORTANT:** Select "Do not assign a public IPv4 address". We will attach our reserved one later.
-5.  **SSH Keys:** Download your private key and keep it safe.
-6.  Click **Create**.
+### 3. Launching the Instance (The "Safe" Way)
+1.  **Image:** Select **Canonical Ubuntu 22.04**. (Avoid 20.04 as it requires manual Docker fixes).
+2.  **Shape:** VM.Standard.A1.Flex (4 OCPU, 24GB RAM).
+3.  **Storage:**
+    * Click "Specify a custom boot volume size".
+    * Change `50` to **200 GB**. (Maximize your free tier limit immediately).
+4.  **SSH Keys (CRITICAL):**
+    * We will use a **Dual-Key Strategy** to prevent lockouts.
+    * Save the default key for user `ubuntu`.
+    * *Advanced Tip:* Paste a **second** public key in the "Cloud-Init" script for a backup admin user (see Security section).
 
 ### 4. Attach the Reserved IP
 Once the instance is running:
@@ -80,41 +80,82 @@ Once the instance is running:
 5.  Click the actions menu (`...`) next to the private IP and select **Edit**.
 6.  Choose **Reserved public IP** and select the IP you reserved earlier.
 
----
-
-## Phase 2: Domain DNS Configuration
-
-Go to your domain registrar's DNS settings. We will create `A` records pointing subdomains to your new OCI Public IP.
-
-| Type | Host/Name | Value/Target |
-| :--- | :--- | :--- |
-| A | npm | `YOUR.OCI.PUBLIC.IP` |
-| A | portainer | `YOUR.OCI.PUBLIC.IP` |
-| A | code | `YOUR.OCI.PUBLIC.IP` |
-| A | db | `YOUR.OCI.PUBLIC.IP` |
-
----
-
-## Phase 3: Server Preparation
-
-SSH into your new server:
-```bash
-ssh -i path/to/your.key ubuntu@YOUR.IP
-````
-
-### 1\. Update and Secure OS Firewall
-
-Oracle's Ubuntu images come with `iptables` rules pre-configured. We must allow web traffic through the OS firewall.
+### 5. Fixing the 47GB Storage Limit (Linux Native Method)
+Even if you selected 200GB in the Oracle Console, Ubuntu initially only sees the default 47GB partition. We can expand this live using standard Linux tools, no extra Oracle utilities required.
 
 ```bash
-sudo apt update && sudo apt upgrade -y
-# Allow HTTP and HTTPS
-sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 80 -j ACCEPT
-sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 443 -j ACCEPT
-# Save the rules persistently
-sudo netfilter-persistent save
+# 1. Expand the partition to fill the disk
+sudo growpart /dev/sda 1
+
+# 2. Resize the filesystem to use the new space
+sudo resize2fs /dev/sda1
+
+# 3. Verify (Should show ~196G)
+df -h /
 ```
 
+-----
+
+## Phase 3: Security & "Anti-Lockout" Strategy
+
+We learned this the hard way: **Docker volume mappings can break SSH permissions.** If you map `/home/ubuntu` directly, you *will* get locked out.
+
+### 1\. The Backup Admin User
+
+Create a second user with `sudo` access. If `ubuntu` permissions break, login as `sans`.
+
+```bash
+# Create user
+sudo adduser sans
+sudo usermod -aG sudo sans
+
+# Copy SSH keys from ubuntu (or add a new one)
+sudo mkdir -p /home/sans/.ssh
+sudo cp /home/ubuntu/.ssh/authorized_keys /home/sans/.ssh/
+sudo chown -R sans:sans /home/sans
+sudo chmod 700 /home/sans/.ssh
+sudo chmod 600 /home/sans/.ssh/authorized_keys
+```
+
+### 2\. The Golden Rule of Docker Volumes
+
+> **NEVER** map `/home/ubuntu` to a container.
+> **ALWAYS** map a sub-folder (e.g., `/home/ubuntu/workspace`).
+
+Create your safe directories now:
+
+```bash
+# Main stack folder
+mkdir -p ~/my-stack
+
+# The Safe Workspace for VS Code
+mkdir -p ~/workspace
+
+# Data folders for services
+mkdir -p ~/my-stack/npm/data
+mkdir -p ~/my-stack/npm/letsencrypt
+mkdir -p ~/my-stack/portainer_data
+mkdir -p ~/my-stack/code-config
+mkdir -p ~/my-stack/postgres_data
+mkdir -p ~/my-stack/pgadmin_data
+mkdir -p ~/my-stack/minecraft_data
+```
+
+-----
+
+## Phase 3: The Docker Stack
+
+We use **Docker Compose** to manage everything.
+
+### 1\. Install Docker (Ubuntu 22.04)
+
+```bash
+curl -fsSL [https://get.docker.com](https://get.docker.com) -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker ubuntu
+sudo usermod -aG docker sans
+newgrp docker
+```
 ### 2\. Install Docker (The ARM64 Way)
 
 {: .prompt-info }
@@ -151,38 +192,24 @@ newgrp docker
 docker run hello-world
 ```
 
------
 
-## Phase 4: The Docker Compose Stack
+### 2\. The Master Compose File
 
-We will use Docker Compose to define our entire environment in a single file.
+Create `~/my-stack/docker-compose.yml`.
 
-### 1\. Directory Structure
-
-Create a home for your stack and its persistent data.
-
-```bash
-mkdir -p ~/my-stack/{npm/{data,letsencrypt},portainer_data,code-config,project-data,postgres_data,pgadmin_data}
-cd ~/my-stack
-```
-
-### 2\. The `docker-compose.yml` File
-
-Create the file: `nano docker-compose.yml`.
-
-Be sure to change the passwords marked with `# CHANGE THIS`.
+> **Note:** Replace `net` with whatever network name you prefer, but ensure it is consistent.
 
 ```yaml
 services:
-  # 1. Nginx Proxy Manager (The Gateway)
+  # 1. Nginx Proxy Manager (Gateway)
   npm:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: npm
     restart: unless-stopped
     ports:
-      - '80:80'   # HTTP
-      - '443:443' # HTTPS
-      - '81:81'   # NPM Admin Interface (Temporary)
+      - '80:80'
+      - '443:443'
+      - '81:81' # Admin port
     environment:
       DB_SQLITE_FILE: "/data/database.sqlite"
     volumes:
@@ -191,15 +218,12 @@ services:
     networks:
       - net
 
-  # 2. Portainer (Docker Management)
+  # 2. Portainer (Management)
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer
     restart: unless-stopped
-    security_opt:
-      - no-new-privileges:true
     volumes:
-      - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./portainer_data:/data
     networks:
@@ -214,10 +238,11 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Asia/Manila
-      - PASSWORD=ChangeThis123 # CHANGE THIS for web login
+      - PASSWORD=securepassword123 # CHANGE THIS
     volumes:
       - ./code-config:/config
-      - ./project-data:/home/coder/project
+      # !!! SAFE MAPPING: Sub-folder only! !!!
+      - /home/ubuntu/workspace:/home/coder/workspace
     networks:
       - net
 
@@ -226,7 +251,7 @@ services:
     image: redis:alpine
     container_name: redis
     restart: unless-stopped
-    command: redis-server --appendonly yes --requirepass "ChangeThis123" # CHANGE THIS
+    command: redis-server --appendonly yes --requirepass "redispassword123" # CHANGE THIS
     networks:
       - net
 
@@ -236,23 +261,25 @@ services:
     container_name: postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: ChangeThis123 # CHANGE THIS
-      POSTGRES_DB: db
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pgxcvsdfwer234 # CHANGE THIS
+      POSTGRES_DB: pgdb
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
+    ports:
+      # Expose to Localhost only (for secure SSH Tunneling)
+      - "127.0.0.1:5432:5432"
     networks:
       - net
-    # NOTE: No 'ports' section. Database is hidden from the internet.
 
-  # 6. pgAdmin (Web Database GUI)
+  # 6. pgAdmin (Web DB Admin)
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: pgadmin
     restart: unless-stopped
     environment:
-      PGADMIN_DEFAULT_EMAIL: "admin@domain.ph"  # Login Email
-      PGADMIN_DEFAULT_PASSWORD: "ChangeThis123" # Login Password
+      PGADMIN_DEFAULT_EMAIL: "admin@sanchez.ph"
+      PGADMIN_DEFAULT_PASSWORD: "secureadminpassword123" # CHANGE THIS
     volumes:
       - ./pgadmin_data:/var/lib/pgadmin
     networks:
@@ -266,6 +293,23 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 86400 --cleanup
+    networks:
+      - net
+
+  # 8. Minecraft Server
+  minecraft:
+    image: itzg/minecraft-server
+    container_name: minecraft
+    restart: unless-stopped
+    ports:
+      - "25565:25565" # TCP/UDP Game Port
+    environment:
+      EULA: "TRUE"
+      TYPE: "PAPER"
+      MEMORY: "6G"
+      MOTD: "Welcome to Sanchez Cloud"
+    volumes:
+      - ./minecraft_data:/data
     networks:
       - net
 
@@ -290,53 +334,113 @@ docker compose up -d
 
 -----
 
-## Phase 5: Nginx Proxy Manager Configuration
+## Phase 4: Networking & Nginx Proxy Manager
 
-We need to configure the reverse proxy to route traffic from domains to containers and handle SSL.
+This setup uses a mix of **Proxied** and **DNS Only** records in Cloudflare, and specific Nginx configurations.
 
-### The "Chicken and Egg" Problem (Important\!)
+### 1\. Cloudflare Records
 
-Nginx Proxy Manager's admin interface runs on port 81. To secure it behind a domain (like `npm.yourdomain.com`), we first need to access it via the raw IP to set it up.
+| Type | Name | Content | Proxy Status | Purpose |
+| :--- | :--- | :--- | :--- | :--- |
+| A | npm | `YOUR_RESERVED_IP` | **Proxied (Orange)** | NPM Dashboard |
+| A | code | `YOUR_RESERVED_IP` | **Proxied (Orange)** | VS Code |
+| A | portainer | `YOUR_RESERVED_IP` | **Proxied (Orange)** | Portainer |
+| A | mc | `YOUR_RESERVED_IP` | **DNS Only (Grey)** | Minecraft (TCP) |
 
-### 1\. Access NPM Initially
+{: .prompt-warning }
+**Minecraft requires "DNS Only":** Cloudflare's free proxy only handles HTTP/HTTPS. It will block Minecraft traffic. You must turn off the Orange Cloud for the `mc` subdomain.
 
-1.  Ensure Port 81 is allowed in your OCI Security List and OS `iptables` (we did this in the compose file and OS firewall setup, but OCI VCN might need a temporary rule).
-2.  Navigate to `http://YOUR.IP:81`.
-3.  Login with default credentials (`admin@example.com` / `changeme`) and immediately change them.
+### 2\. Nginx Proxy Manager Setup
 
-### 2\. Configure Proxy Hosts
+Access NPM at `http://YOUR_IP:81` initially. Create the following Proxy Hosts:
 
-For each subdomain, create a Proxy Host.
+| Domain | Forward Hostname | Port | Websockets Support | Force SSL |
+| :--- | :--- | :--- | :--- | :--- |
+| `npm.sanchez.ph` | `npm` | 81 | Optional | **Yes** |
+| `portainer.sanchez.ph` | `portainer` | 9000 | **Required** | **Yes** |
+| `code.sanchez.ph` | `code-server` | 8443 | **Required** | **Yes** |
+| `db.sanchez.ph` | `pgadmin` | 80 | Optional | **Yes** |
 
-**Example: Portainer (`portainer.domain.ph`)**
+**Critical Configurations:**
 
-  * **Domain Names:** `portainer.domain.ph`
-  * **Scheme:** `http`
-  * **Forward Hostname:** `portainer` (Matches container name in YAML)
-  * **Forward Port:** `9000`
-  * **Websockets Support:** **Enable** (Crucial for Portainer/Code-Server).
-  * **SSL Tab:** "Request a new SSL Certificate", Force SSL, Agree to TOS.
+  * **Websockets Support:** Must be enabled for **Portainer** (for the console to work) and **Code-Server** (for the terminal to work).
+  * **Force SSL:** Always enable this in the SSL tab to ensure all traffic is encrypted.
+  * **Block Common Exploits:** Recommended for all hosts.
 
-Repeat for `code.domain.ph` (port 8443) and `db.domain.ph` (port 80, forwarding to `pgadmin` container).
+### 3\. OCI Firewall Rules
 
-### 3\. Secure NPM Itself and Close Port 81
+Go to your VCN Security List and open these ports:
 
-Now, configure `npm.domain.ph` to point to the NPM container.
-
-{: .prompt-tip }
-**Troubleshooting Tip:** When configuring NPM to proxy *itself*, do **not** use the public IP as the Forward Hostname if Port 81 is blocked on the firewall. Use `127.0.0.1` or `npm` as the Forward Hostname and port `81`. This keeps traffic internal.
-
-Once `https://npm.domain.ph` is working:
-
-1.  Edit `docker-compose.yml` and remove `  - '81:81' ` from the `npm` service ports.
-2.  Run `docker compose up -d` to apply.
-3.  Remove Port 81 from your OCI VCN Security List if you added it.
+  * **80/443 (TCP):** Web Traffic
+  * **25565 (TCP):** Minecraft
+  * **22 (TCP):** SSH
+  * **81 (TCP):** NPM Setup (Close this after setup is complete).
 
 -----
 
-## Phase 6: Troubleshooting & Customization
+## Phase 5: Automated Backups
 
-During this setup, we encountered and solved several real-world issues.
+Don't rely on luck. We set up a script to dump the database and compress the files.
+
+### 1\. The Backup Script
+
+Create `~/auto_backup.sh`:
+
+```bash
+#!/bin/bash
+BACKUP_DIR="/home/ubuntu/backups"
+SOURCE_DIR="/home/ubuntu/my-stack"
+WORKSPACE_DIR="/home/ubuntu/workspace"
+DATE=$(date +%Y-%m-%d_%H-%M)
+FILENAME="backup-$DATE.tar.gz"
+
+mkdir -p $BACKUP_DIR
+
+echo "Starting backup..."
+# 1. Hot SQL Dump
+docker exec -t postgres pg_dump -U pguser pgdb > $SOURCE_DIR/postgres_backup.sql
+
+# 2. Compress Stack + Workspace
+tar -czf $BACKUP_DIR/$FILENAME $SOURCE_DIR $WORKSPACE_DIR
+
+# 3. Cleanup
+rm $SOURCE_DIR/postgres_backup.sql
+find $BACKUP_DIR -type f -name "*.tar.gz" -mtime +7 -delete
+echo "Done."
+```
+
+### 2\. Cron Job
+
+Run `crontab -e` and add:
+
+```bash
+0 3 * * * /home/ubuntu/auto_backup.sh >> /home/ubuntu/backup.log 2>&1
+```
+
+-----
+
+## Phase 6: Security Hardening
+
+1.  **Install Fail2Ban:** Protect SSH from brute-force attacks.
+    ```bash
+    sudo apt install -y fail2ban
+    ```
+2.  **Verify Exposed Ports:** Only ports 22, 80, and 443 should be open on your OCI VCN Security list.
+
+### Alternative Secure Database Access: SSH Tunneling
+
+Instead of exposing pgAdmin to the web, you can use a desktop client (like pgAdmin desktop) and tunnel securely through SSH.
+
+  * **DB Host:** `127.0.0.1` (Localhost relative to the tunnel end)
+  * **DB Port:** `5432`
+  * **SSH Tunnel Host:** `YOUR.PUBLIC.IP`
+  * **SSH Tunnel User:** `ubuntu`
+  * **SSH Key:** Your private key file.
+
+-----
+
+
+## Troubleshooting Guide
 
 ### Issue 1: Portainer Timeout
 
@@ -389,79 +493,38 @@ exit
     ```
 4.  Type `exit` to return to the host.
 
------
+### Issue 5: "Permission Denied (publickey)" on SSH
 
-## Phase 7: Security Hardening
+  * **Cause:** You mapped `/home/ubuntu` in Docker, and it changed the folder permissions. SSH rejects "insecure" home folders.
+  * **Fix:**
+    1.  Login as your backup user (`sans`).
+    2.  Run `sudo chmod 755 /home/ubuntu`.
+    3.  Run `sudo chmod 700 /home/ubuntu/.ssh`.
+    4.  Run `sudo chmod 600 /home/ubuntu/.ssh/authorized_keys`.
+  * **Prevention:** Use the "Safe Workspace" mapping strategy above.
 
-1.  **Install Fail2Ban:** Protect SSH from brute-force attacks.
-    ```bash
-    sudo apt install -y fail2ban
-    ```
-2.  **Verify Exposed Ports:** Only ports 22, 80, and 443 should be open on your OCI VCN Security list.
+### Issue 6: Minecraft "Connection Refused"
 
-### Alternative Secure Database Access: SSH Tunneling
+  * **Cause:** You likely have the Cloudflare Proxy (Orange Cloud) turned on.
+  * **Fix:** Switch the `mc` A record to **DNS Only** (Grey Cloud) in the Cloudflare dashboard.
 
-Instead of exposing pgAdmin to the web, you can use a desktop client (like pgAdmin desktop) and tunnel securely through SSH.
+### Issue 7: Code-Server "npm command not found"
 
-  * **DB Host:** `127.0.0.1` (Localhost relative to the tunnel end)
-  * **DB Port:** `5432`
-  * **SSH Tunnel Host:** `YOUR.PUBLIC.IP`
-  * **SSH Tunnel User:** `ubuntu`
-  * **SSH Key:** Your private key file.
+  * **Cause:** The Code-Server image is minimal. You cannot use `sudo` inside the browser terminal easily.
+  * **Fix:**
+    1.  Go to your main SSH terminal.
+    2.  Run `docker exec -it -u 0 code-server bash`.
+    3.  Run `apt-get update && apt-get install -y nodejs npm`.
 
------
+### Issue 8: Docker Compose Network Error
 
-## Phase 8: Automated Backups
-
-We need a robust backup strategy that captures database data and configurations.
-
-### 1\. The Backup Script
-
-Create `~/auto_backup.sh` and make it executable (`chmod +x`).
-
-```bash
-#!/bin/bash
-# --- Configuration ---
-BACKUP_DIR="/home/ubuntu/backups"
-SOURCE_DIR="/home/ubuntu/my-stack"
-DATE=$(date +%Y-%m-%d_%H-%M)
-FILENAME="backup-$DATE.tar.gz"
-DB_CONTAINER="postgres"
-DB_USER="pguser"
-DB_NAME="pgdb"
-
-mkdir -p $BACKUP_DIR
-
-echo "Starting backup for $DATE..."
-# 1. Hot SQL Dump
-docker exec -t $DB_CONTAINER pg_dump -U $DB_USER $DB_NAME > $SOURCE_DIR/postgres_backup.sql
-# 2. Compress Stack
-tar -czf $BACKUP_DIR/$FILENAME $SOURCE_DIR
-# 3. Cleanup Temp SQL
-rm $SOURCE_DIR/postgres_backup.sql
-# 4. Delete backups older than 7 days
-find $BACKUP_DIR -type f -name "*.tar.gz" -mtime +7 -delete
-echo "Backup Complete: $BACKUP_DIR/$FILENAME"
-```
-
-### 2\. The Cron Job
-
-Run `crontab -e` and add this line to run daily at 3 AM:
-
-```bash
-0 3 * * * /home/ubuntu/auto_backup.sh >> /home/ubuntu/backup.log 2>&1
-```
-
-### How to Restore
-
-To restore from disaster:
-
-1.  `cd ~/my-stack && docker compose down`
-2.  `sudo tar -xzvf ~/backups/YOUR_BACKUP_FILE.tar.gz -C /`
-3.  `docker compose up -d`
+  * **Cause:** Renaming networks (e.g., from `sanchez_net` to `net`) without downing the stack first.
+  * **Fix:** Run `docker compose down` then `docker compose up -d`.
 
 -----
 
 ## Conclusion
 
-You have successfully built a professional, secure Cloud Development Environment for free on Oracle Cloud. You have overcome ARM64 specific challenges, navigated complex networking, and established a robust backup routine. Happy coding in the cloud\!
+You now have a developer environment that rivals paid VPS options costing $50/month. It's backed up, redundant, and runs on high-performance ARM architecture.
+
+Happy Coding\!
