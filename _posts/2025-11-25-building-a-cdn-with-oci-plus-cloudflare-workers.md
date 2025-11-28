@@ -44,7 +44,7 @@ Before changing my nameservers, I added `sanchez.ph` to Cloudflare. This is wher
 1.  I clicked **Add Site** and selected the **Free Plan**.
 2.  Cloudflare automatically scanned my domain and imported all my existing DNS records (like my VPS IP, mail records, etc.).
 
-> * *Pro Tip:* This saved me from typing them manually!
+> *Pro Tip:* This saved me from typing them manually!
 {: .prompt-tip }
 
 3.  With my existing records safe, I added my **new** CDN record:
@@ -62,7 +62,7 @@ If you try to use standard Cloudflare Page Rules to rewrite the Host Header, you
 1.  I navigated to **Compute (Workers)** in the Cloudflare dashboard.
 2.  I created a "Hello World" worker and replaced the code with the script below.
 
-> * *Update:* I added a check to block the root path (`/`). Without this, anyone visiting `cdn.sanchez.ph` would see a raw XML list of every file in my bucket!
+> *Update:* I added a check to block the root path (`/`). Without this, anyone visiting `cdn.sanchez.ph` would see a raw XML list of every file in my bucket!
 {: .prompt-note }
 
 ```javascript
@@ -103,7 +103,7 @@ export default {
     return fetch(request);
   }
 };
-````
+```
 
 3.  Finally, I went to **Workers Routes** in my domain settings and assigned the route `cdn.sanchez.ph/*` to this worker.
 
@@ -135,8 +135,8 @@ Cloudflare showed a warning on my `mail` record: *"This record exposes the IP ad
   * **The Cause:** I initially had the `mail` record set to **Proxied (Orange Cloud)**. Cloudflare only proxies web traffic (HTTP), so it was inadvertently blocking my email traffic (SMTP).
   * **The Fix:** I changed the `mail` record to **DNS Only (Grey Cloud)**.
 
-  > * *Note:* The warning about exposing the IP is normal. You cannot host email without exposing the mail server's IP address. Since my mail server is on a different IP than my CDN setup, there was no security risk.
-  {: .prompt-note }
+> *Note:* The warning about exposing the IP is normal. You cannot host email without exposing the mail server's IP address. Since my mail server is on a different IP than my CDN setup, there was no security risk.
+{: .prompt-note }
 
 ## The Result
 
