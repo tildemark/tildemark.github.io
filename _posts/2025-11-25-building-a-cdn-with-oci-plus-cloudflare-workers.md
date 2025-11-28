@@ -31,7 +31,7 @@ I created a public bucket in OCI Object Storage.
 
 > *Note:* OCI recently updated their URL structure to use namespace-specific endpoints. My direct file link looked like this:
 `https://axjnmgygqr0w.objectstorage.us-phoenix-1.oci.customer-oci.com/n/axjnmgygqr0w/b/cdn-bucket/o/welcome.webp`
-{: .prompt-note }
+{: .prompt-info }
 
 ![File at OCI](https://axjnmgygqr0w.objectstorage.us-phoenix-1.oci.customer-oci.com/n/axjnmgygqr0w/b/cdn-bucket/o/welcome.webp){: .normal }
 
@@ -63,7 +63,7 @@ If you try to use standard Cloudflare Page Rules to rewrite the Host Header, you
 2.  I created a "Hello World" worker and replaced the code with the script below.
 
 > *Update:* I added a check to block the root path (`/`). Without this, anyone visiting `cdn.sanchez.ph` would see a raw XML list of every file in my bucket!
-{: .prompt-note }
+{: .prompt-info }
 
 ```javascript
 export default {
@@ -136,7 +136,7 @@ Cloudflare showed a warning on my `mail` record: *"This record exposes the IP ad
   * **The Fix:** I changed the `mail` record to **DNS Only (Grey Cloud)**.
 
 > *Note:* The warning about exposing the IP is normal. You cannot host email without exposing the mail server's IP address. Since my mail server is on a different IP than my CDN setup, there was no security risk.
-{: .prompt-note }
+{: .prompt-info }
 
 ## The Result
 
