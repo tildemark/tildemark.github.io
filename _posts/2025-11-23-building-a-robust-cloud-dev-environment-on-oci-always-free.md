@@ -29,6 +29,8 @@ Most tutorials skip the hard stuff: storage limits, SSH lockouts, and ARM64 comp
 * **Security:** Dual-User Access, Fail2Ban, Internal Networking.
 * **Backups:** Automated Daily Cron.
 
+> **Omit Minecraft** if you are not confident of your IP being exposed. 
+{: .prompt-tip }
 ---
 
 ## Prerequisites
@@ -58,9 +60,6 @@ OCI uses "Security Lists" as a firewall outside your VM. We must open HTTP/HTTPS
 | 0.0.0.0/0 | TCP | 81 | NPM (Temporary) |
 | 0.0.0.0/0 | TCP | 25565 | Minecraft |
 | 0.0.0.0/0 | TCP | 9090 | Cockpit |
-
-> Omit Minecraft if you are not confident of your IP being exposed. 
-{: .prompt-tip }
 
 {: .prompt-warning }
 **Security Note:** Do not open ports 5432 (Postgres), 6379 (Redis), or 9000 (Portainer) here. We will keep those internal for security. Remove NPM after you set it up from the NPM interface.
