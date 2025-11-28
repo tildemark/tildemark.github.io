@@ -31,6 +31,7 @@ Most tutorials skip the hard stuff: storage limits, SSH lockouts, and ARM64 comp
 
 > **Omit Minecraft** if you are not confident of your IP being exposed. 
 {: .prompt-tip }
+
 ---
 
 ## Prerequisites
@@ -61,8 +62,8 @@ OCI uses "Security Lists" as a firewall outside your VM. We must open HTTP/HTTPS
 | 0.0.0.0/0 | TCP | 25565 | Minecraft |
 | 0.0.0.0/0 | TCP | 9090 | Cockpit |
 
+> **Security Note:** Do not open ports 5432 (Postgres), 6379 (Redis), or 9000 (Portainer) here. We will keep those internal for security. Remove NPM after you set it up from the NPM interface.
 {: .prompt-warning }
-**Security Note:** Do not open ports 5432 (Postgres), 6379 (Redis), or 9000 (Portainer) here. We will keep those internal for security. Remove NPM after you set it up from the NPM interface.
 
 ### 3. Launching the Instance (The "Safe" Way)
 1.  **Image:** Select **Canonical Ubuntu 22.04**. (Avoid 20.04 as it requires manual Docker fixes).
@@ -165,7 +166,7 @@ mkdir -p ~/my-stack/pgadmin_data
 mkdir -p ~/my-stack/minecraft_data
 ```
 
-### \. Installing Cockpit
+### 3\. Installing Cockpit
 Having been locked out several times, installing **Cockpit** is a brilliant idea for a "fail-safe" backup.
 
 **Why it works:**
@@ -175,7 +176,8 @@ Cockpit runs as a **System Service** (via `systemd`), not as a Docker container.
   * **If you mess up Docker networking?** Cockpit stays alive.
   * **If you lock yourself out of SSH keys?** Cockpit provides a **Web Terminal** that accepts your username/password directly.
 
-It effectively acts as an "Emergency Escape Pod" that bypasses your entire Docker stack.
+> It effectively acts as an "Emergency Escape Pod" that bypasses your entire Docker stack.
+{: .prompt-tip }
 
 **Step 1: Install Cockpit**
 
