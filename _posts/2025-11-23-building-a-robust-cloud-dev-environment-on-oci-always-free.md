@@ -55,7 +55,12 @@ OCI uses "Security Lists" as a firewall outside your VM. We must open HTTP/HTTPS
 | 0.0.0.0/0 | TCP | 22 | SSH Access |
 | 0.0.0.0/0 | TCP | 80 | HTTP & Let's Encrypt |
 | 0.0.0.0/0 | TCP | 443 | HTTPS |
-| 0.0.0.0/0 | TCP | 81 | NPM (Temporary)|
+| 0.0.0.0/0 | TCP | 81 | NPM (Temporary) |
+| 0.0.0.0/0 | TCP | 25565 | Minecraft |
+| 0.0.0.0/0 | TCP | 9090 | NPM (Temporary) |
+
+> [!NOTE]
+> Omit Minecraft if you are not confident of your IP being exposed. 
 
 {: .prompt-warning }
 **Security Note:** Do not open ports 5432 (Postgres), 6379 (Redis), or 9000 (Portainer) here. We will keep those internal for security. Remove NPM after you set it up from the NPM interface.
@@ -94,6 +99,25 @@ sudo resize2fs /dev/sda1
 df -h /
 ```
 
+### 6. Configuring the OS Firewall (Crucial)
+Oracle Ubuntu images come with strict iptables rules. Even if you open ports in the OCI Console, the server itself will block connections unless you run these commands:
+
+```bash
+# Open Web Ports
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 80 -j ACCEPT
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 443 -j ACCEPT
+
+# Open Admin Ports (Temporary Setup + Cockpit)
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 81 -j ACCEPT
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 9090 -j ACCEPT
+
+# Open Game Ports (Minecraft)
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 25565 -j ACCEPT
+
+# Save rules so they persist after reboot
+sudo netfilter-persistent save
+```
+
 -----
 
 ## Phase 3: Security & "Anti-Lockout" Strategy
@@ -119,7 +143,8 @@ sudo chmod 600 /home/sans/.ssh/authorized_keys
 
 ### 2\. The Golden Rule of Docker Volumes
 
-> **NEVER** map `/home/ubuntu` to a container.
+> [!NOTE]
+> **NEVER** map `/home/ubuntu` to a container.  
 > **ALWAYS** map a sub-folder (e.g., `/home/ubuntu/workspace`).
 
 Create your safe directories now:
@@ -141,6 +166,84 @@ mkdir -p ~/my-stack/pgadmin_data
 mkdir -p ~/my-stack/minecraft_data
 ```
 
+### \. Installing Cockpit
+Having been locked out several times, installing **Cockpit** is a brilliant idea for a "fail-safe" backup.
+
+**Why it works:**
+Cockpit runs as a **System Service** (via `systemd`), not as a Docker container.
+
+  * **If Docker crashes?** Cockpit stays alive.
+  * **If you mess up Docker networking?** Cockpit stays alive.
+  * **If you lock yourself out of SSH keys?** Cockpit provides a **Web Terminal** that accepts your username/password directly.
+
+It effectively acts as an "Emergency Escape Pod" that bypasses your entire Docker stack.
+
+**Step 1: Install Cockpit**
+
+Run these commands on your server (SSH in as `ubuntu`):
+
+```bash
+# 1. Update and Install
+sudo apt update
+sudo apt install -y cockpit
+
+# 2. Enable and Start the service
+sudo systemctl enable --now cockpit.socket
+```
+
+**Step 2: Open the Firewalls (Critical)**
+
+Cockpit listens on **Port 9090**. You need to open this port in **two** places.
+
+**1. The OS Firewall (iptables):**
+
+```bash
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 9090 -j ACCEPT
+sudo netfilter-persistent save
+```
+
+**2. The Oracle Cloud Firewall (VCN):**
+
+1.  Go to **Networking** \> **Virtual Cloud Networks**.
+2.  Click your VCN \> **Security Lists** \> **Default Security List**.
+3.  Add **Ingress Rule**:
+      * **Source:** `0.0.0.0/0`
+      * **Protocol:** TCP
+      * **Destination Port:** `9090`
+
+**Step 3: Access it**
+
+Open your browser and go to:
+**`https://<YOUR.PUBLIC.IP>:9090`**
+
+  * **Security Warning:** Your browser will yell at you ("Your connection is not private"). This is normal because Cockpit uses a self-signed certificate.
+      * Click **Advanced** \> **Proceed to... (unsafe)**.
+
+**Step 4: Login**
+
+You can log in with **any** user that has a password.
+
+  * **User:** `backup_user` (or `ubuntu` if you set a password).
+  * **Password:** The password you created.
+
+Once logged in, click **"Terminal"** on the left menu. You now have full root access via the browser, completely independent of SSH keys\!
+
+-----
+> [!WARNING]
+> **Important: Do NOT put Cockpit behind Nginx**
+ 
+You might be tempted to set up `cockpit.sanchez.ph` in Nginx Proxy Manager. **Do not do this.**
+
+**Why?**
+If your goal is to have a "Backup Login" in case Docker breaks:
+
+1.  Nginx is a Docker container.
+2.  If Docker breaks, Nginx dies.
+3.  If Nginx dies, `cockpit.domain.ph` stops working.
+4.  You are locked out.
+
+**Keep Cockpit on the raw IP (Port 9090).** It must remain exposed directly to the internet to serve as a true backup. Since it requires a username/password, it is reasonably secure (and Fail2Ban protects it automatically on Ubuntu).
+
 -----
 
 ## Phase 3: The Docker Stack
@@ -153,7 +256,7 @@ We use **Docker Compose** to manage everything.
 curl -fsSL [https://get.docker.com](https://get.docker.com) -o get-docker.sh
 sudo sh get-docker.sh
 sudo usermod -aG docker ubuntu
-sudo usermod -aG docker sans
+sudo usermod -aG docker backup_user
 newgrp docker
 ```
 ### 2\. Install Docker (The ARM64 Way)
@@ -191,7 +294,6 @@ newgrp docker
 # Test
 docker run hello-world
 ```
-
 
 ### 2\. The Master Compose File
 
@@ -350,24 +452,7 @@ This setup uses a mix of **Proxied** and **DNS Only** records in Cloudflare, and
 {: .prompt-warning }
 **Minecraft requires "DNS Only":** Cloudflare's free proxy only handles HTTP/HTTPS. It will block Minecraft traffic. You must turn off the Orange Cloud for the `mc` subdomain.
 
-### 2\. Nginx Proxy Manager Setup
-
-Access NPM at `http://YOUR_IP:81` initially. Create the following Proxy Hosts:
-
-| Domain | Forward Hostname | Port | Websockets Support | Force SSL |
-| :--- | :--- | :--- | :--- | :--- |
-| `npm.sanchez.ph` | `npm` | 81 | Optional | **Yes** |
-| `portainer.sanchez.ph` | `portainer` | 9000 | **Required** | **Yes** |
-| `code.sanchez.ph` | `code-server` | 8443 | **Required** | **Yes** |
-| `db.sanchez.ph` | `pgadmin` | 80 | Optional | **Yes** |
-
-**Critical Configurations:**
-
-  * **Websockets Support:** Must be enabled for **Portainer** (for the console to work) and **Code-Server** (for the terminal to work).
-  * **Force SSL:** Always enable this in the SSL tab to ensure all traffic is encrypted.
-  * **Block Common Exploits:** Recommended for all hosts.
-
-### 3\. OCI Firewall Rules
+### 2\. OCI Firewall Rules
 
 Go to your VCN Security List and open these ports:
 
@@ -375,6 +460,43 @@ Go to your VCN Security List and open these ports:
   * **25565 (TCP):** Minecraft
   * **22 (TCP):** SSH
   * **81 (TCP):** NPM Setup (Close this after setup is complete).
+  * **9090 (TCP):** Cockpit
+
+Access NPM at `http://YOUR_IP:81` initially. Create the following Proxy Hosts:
+
+| Domain | Forward Hostname | Port | Websockets Support | Force SSL |
+| :--- | :--- | :--- | :--- | :--- |
+| `npm.domain.ph` | `npm` | 81 | Optional | **Yes** |
+| `portainer.domain.ph` | `portainer` | 9000 | **Required** | **Yes** |
+| `code.domain.ph` | `code-server` | 8443 | **Required** | **Yes** |
+| `db.domain.ph` | `pgadmin` | 80 | Optional | **Yes** |
+
+**Critical Configurations:**
+
+  * **Websockets Support:** Must be enabled for **Portainer** (for the console to work) and **Code-Server** (for the terminal to work).
+  * **Force SSL:** Always enable this in the SSL tab to ensure all traffic is encrypted.
+  * **Block Common Exploits:** Recommended for all hosts.
+
+### 3\. Configuring the OS Firewall (Crucial)
+
+Oracle Ubuntu images come with strict `iptables` rules. Even if you open ports in the OCI Console, the server itself will block connections unless you run these commands:
+
+```bash
+# Open Web Ports
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 80 -j ACCEPT
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 443 -j ACCEPT
+
+# Open Admin Ports (Temporary Setup + Cockpit) 
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 81 -j ACCEPT
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 9090 -j ACCEPT
+# ignore cockpit if you already did this at the top
+
+# Open Game Ports (Minecraft)
+sudo iptables -I INPUT 6 -m state --state NEW -p tcp --dport 25565 -j ACCEPT
+
+# Save rules so they persist after reboot
+sudo netfilter-persistent save
+```
 
 -----
 
@@ -438,7 +560,6 @@ Instead of exposing pgAdmin to the web, you can use a desktop client (like pgAdm
   * **SSH Key:** Your private key file.
 
 -----
-
 
 ## Troubleshooting Guide
 
