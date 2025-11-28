@@ -57,10 +57,10 @@ OCI uses "Security Lists" as a firewall outside your VM. We must open HTTP/HTTPS
 | 0.0.0.0/0 | TCP | 443 | HTTPS |
 | 0.0.0.0/0 | TCP | 81 | NPM (Temporary) |
 | 0.0.0.0/0 | TCP | 25565 | Minecraft |
-| 0.0.0.0/0 | TCP | 9090 | NPM (Temporary) |
+| 0.0.0.0/0 | TCP | 9090 | Cockpit |
 
-> [!NOTE]
 > Omit Minecraft if you are not confident of your IP being exposed. 
+{: .prompt-tip }
 
 {: .prompt-warning }
 **Security Note:** Do not open ports 5432 (Postgres), 6379 (Redis), or 9000 (Portainer) here. We will keep those internal for security. Remove NPM after you set it up from the NPM interface.
@@ -143,9 +143,9 @@ sudo chmod 600 /home/sans/.ssh/authorized_keys
 
 ### 2\. The Golden Rule of Docker Volumes
 
-> [!NOTE]
 > **NEVER** map `/home/ubuntu` to a container.  
-> **ALWAYS** map a sub-folder (e.g., `/home/ubuntu/workspace`).
+**ALWAYS** map a sub-folder (e.g., `/home/ubuntu/workspace`).
+{: .prompt-danger }
 
 Create your safe directories now:
 
@@ -228,9 +228,8 @@ You can log in with **any** user that has a password.
 
 Once logged in, click **"Terminal"** on the left menu. You now have full root access via the browser, completely independent of SSH keys\!
 
------
-> [!WARNING]
-> **Important: Do NOT put Cockpit behind Nginx**
+**Important: Do NOT put Cockpit behind Nginx**
+{: .prompt-warning }
  
 You might be tempted to set up `cockpit.sanchez.ph` in Nginx Proxy Manager. **Do not do this.**
 
@@ -242,7 +241,8 @@ If your goal is to have a "Backup Login" in case Docker breaks:
 3.  If Nginx dies, `cockpit.domain.ph` stops working.
 4.  You are locked out.
 
-**Keep Cockpit on the raw IP (Port 9090).** It must remain exposed directly to the internet to serve as a true backup. Since it requires a username/password, it is reasonably secure (and Fail2Ban protects it automatically on Ubuntu).
+> **Keep Cockpit on the raw IP (Port 9090).** It must remain exposed directly to the internet to serve as a true backup. Since it requires a username/password, it is reasonably secure (and Fail2Ban protects it automatically on Ubuntu).
+{: .prompt-tip }
 
 -----
 
@@ -300,6 +300,7 @@ docker run hello-world
 Create `~/my-stack/docker-compose.yml`.
 
 > **Note:** Replace `net` with whatever network name you prefer, but ensure it is consistent.
+{: .prompt-info }
 
 ```yaml
 services:
@@ -449,8 +450,9 @@ This setup uses a mix of **Proxied** and **DNS Only** records in Cloudflare, and
 | A | portainer | `YOUR_RESERVED_IP` | **Proxied (Orange)** | Portainer |
 | A | mc | `YOUR_RESERVED_IP` | **DNS Only (Grey)** | Minecraft (TCP) |
 
+
+> **Minecraft requires "DNS Only":** Cloudflare's free proxy only handles HTTP/HTTPS. It will block Minecraft traffic. You must turn off the Orange Cloud for the `mc` subdomain.
 {: .prompt-warning }
-**Minecraft requires "DNS Only":** Cloudflare's free proxy only handles HTTP/HTTPS. It will block Minecraft traffic. You must turn off the Orange Cloud for the `mc` subdomain.
 
 ### 2\. OCI Firewall Rules
 
