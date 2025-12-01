@@ -90,6 +90,6 @@ Building QRyptshare was a great exercise in deploying a modern, full-stack appli
 
 **Source Code:** [https://github.com/tildemark/QRyptshare](https://github.com/tildemark/QRyptshare)
 
-**Live Demo (Web):** [qryptshare.sanchez.ph/generate](https://qryptshare.sanchez.ph/generate) (Available via OCI deployment)
+**Live Demo (Web):** [qr.sanchez.ph/generate](https://qr.sanchez.ph/generate) (Available via OCI deployment)
 
 **Download APK:** [qryptshare.sanchez.ph](https://qryptshare.sanchez.ph) (Available via GitHub Pages)
