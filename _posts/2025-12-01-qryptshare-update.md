@@ -62,7 +62,7 @@ The project is live and open source. You can try the web app, download the Andro
 
 | **Web App Demo** | **Project Home** | **Source Code** |
 | :---: | :---: | :---: |
-| [**qr.sanchez.ph**](http://qr.sanchez.ph) | [**qryptshare.sanchez.ph**](https://qryptshare.sanchez.ph) | [**GitHub**](https://github.com/tildemark/QRyptshare) |
+| [**qr.sanchez.ph**](https://qr.sanchez.ph) | [**qryptshare.sanchez.ph**](https://qryptshare.sanchez.ph) | [**GitHub**](https://github.com/tildemark/QRyptshare) |
 
 -----
 
