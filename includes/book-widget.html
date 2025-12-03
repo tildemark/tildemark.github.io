@@ -1,0 +1,12 @@
+{% if site.data.reading.enabled %}
+<div id="book-widget" class="access">
+  <div class="panel-heading">{{ site.data.reading.status }}</div>
+  <div class="d-flex justify-content-center mt-3 mb-2">
+    <a href="{{ site.data.reading.link }}" target="_blank" rel="noopener noreferrer">
+      <img src="{{ site.data.reading.image }}"
+           alt="{{ site.data.reading.title }}"
+           style="width: 100px; border-radius: 6px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+    </a>
+  </div>
+</div>
+{% endif %}
