@@ -2,9 +2,13 @@
 - title: "Sunken Ship"
   image: "https://cdn.sanchez.ph/gallery/tayud1.webp"
   alt: "Ship sunk after Odette Typhoon"
+  category: "Ships"
+  tags: ["Typhon", "Cebu", "Maritime"]
 
 - title: "Clear Skies"
   image: "https://cdn.sanchez.ph/gallery/tayud2.webp"
   alt: "Clear Skies after the typhoon"
+  category: "Scenery"
+  tags: ["Cebu", "Maritime", "Typhon"]
 
 
