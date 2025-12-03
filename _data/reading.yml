@@ -1,7 +1,11 @@
-# _data/reading.yml
-status: "Currently Reading" # or "Listening to"
-title: "Atomic Habits"
-image: "https://m.media-amazon.com/images/I/81wgcld4wxL._AC_UF1000,1000_QL80_.jpg"
-link: "https://www.amazon.com/Atomic-Habits-James-Clear/dp/0735211299"
-# To hide the widget, set enabled to false
-enabled: true
+- status: "Currently Reading"
+  title: "Atomic Habits"
+  image: "https://m.media-amazon.com/images/I/81wgcld4wxL._AC_UF1000,1000_QL80_.jpg"
+  link: "https://www.amazon.com/Atomic-Habits-James-Clear/dp/0735211299"
+  progress: "60%" # Optional: You can add a progress bar!
+
+- status: "Listening To"
+  title: "Project Hail Mary"
+  image: "https://m.media-amazon.com/images/I/91Gj6-bqR2L._AC_UF1000,1000_QL80_.jpg"
+  link: "https://www.audible.com/pd/Project-Hail-Mary-Audiobook/B08G9PRS1K"
+  progress: "20%"

@@ -33,7 +33,40 @@ layout: compress
 
           <!-- panel -->
           <aside aria-label="Panel" id="panel-wrapper" class="col-xl-3 ps-2 text-muted">
-            {% include book-widget.html %}
+
+            {% if site.data.reading %}
+            <div id="book-widget" class="access">
+              <div class="panel-heading">Reading List</div>
+
+              {% for book in site.data.reading %}
+              <div class="d-flex align-items-center mb-3">
+                <a href="{{ book.link }}" target="_blank" rel="noopener noreferrer" class="flex-shrink-0">
+                  <img src="{{ book.image }}"
+                      alt="{{ book.title }}"
+                      style="width: 70px; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.15);">
+                </a>
+
+                <div class="ps-3" style="line-height: 1.2;">
+                  <div class="small text-muted text-uppercase" style="font-size: 0.65rem; letter-spacing: 1px;">
+                    {{ book.status }}
+                  </div>
+                  <a href="{{ book.link }}" target="_blank" class="fw-bold text-decoration-none" style="font-size: 0.85rem; color: var(--heading-color);">
+                    {{ book.title }}
+                  </a>
+
+                  {% if book.progress %}
+                  <div class="progress mt-2" style="height: 4px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ book.progress }};"
+                        aria-valuenow="{{ book.progress | remove: '%' }}" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+              {% endfor %}
+
+            </div>
+            {% endif %}
+            
             <div class="access">
               {% include_cached update-list.html lang=lang %}
               {% include_cached trending-tags.html lang=lang %}
