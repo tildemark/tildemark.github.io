@@ -7,7 +7,7 @@ toc: true
 comments: true
 math: false
 mermaid: false
-pin: false
+pin: true
 image:
   path: https://cdn.sanchez.ph/blog/blog-tech-cycle.webp
   alt: A retro computer terminal next to a modern laptop.
