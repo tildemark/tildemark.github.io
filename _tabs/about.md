@@ -1,7 +1,7 @@
 ---
 # the default layout is 'page'
 icon: fas fa-info-circle
-order: 4
+order: 5
 ---
 
 Welcome to **SYNTAX**. This isn't a textbook—it's a workspace. I share **S**imple **Y**et **N**ecessary **T**ips And e**X**periments in technology, covering everything from the code snippets you need today to the deep-dive projects you might try tomorrow.
