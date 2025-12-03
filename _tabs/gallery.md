@@ -20,20 +20,48 @@ order: 4
   {% for photo in site.data.gallery %}
   <div class="col gallery-item {{ photo.category | slugify }}">
     <div class="card h-100 border-0 shadow-sm">
+      
       <a href="{{ photo.image }}" class="popup-trigger">
         <img src="{{ photo.image }}" class="card-img-top rounded-top" alt="{{ photo.title }}" style="object-fit: cover; height: 250px;">
       </a>
       
-      <div class="card-body">
-        <h5 class="card-title h6">{{ photo.title }}</h5>
-        
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title h6 fw-bold">{{ photo.title }}</h5>
+        {% if photo.description %}
+          <p class="card-text small text-muted mb-2">{{ photo.description }}</p>
+        {% endif %}
+
+        {% if photo.details %}
+        <div class="bg-light p-2 rounded small mb-2 border mt-auto">
+          <ul class="list-unstyled mb-0" style="font-size: 0.85rem;">
+            
+            {% if photo.details.imo %}
+              <li><strong>IMO:</strong> <a href="https://www.marinetraffic.com/en/ais/details/ships/imo:{{ photo.details.imo }}" target="_blank" class="text-decoration-none">{{ photo.details.imo }} <i class="fas fa-external-link-alt fa-xs"></i></a></li>
+            {% endif %}
+            
+            {% if photo.details.flag %}
+              <li><strong>Flag:</strong> {{ photo.details.flag }}</li>
+            {% endif %}
+
+            {% if photo.details.reg %}
+              <li><strong>Reg:</strong> <a href="https://www.flightradar24.com/data/aircraft/{{ photo.details.reg }}" target="_blank" class="text-decoration-none">{{ photo.details.reg }} <i class="fas fa-external-link-alt fa-xs"></i></a></li>
+            {% endif %}
+            
+            {% if photo.details.location %}
+              <li><strong>Loc:</strong> {{ photo.details.location }}</li>
+            {% endif %}
+            
+          </ul>
+        </div>
+        {% endif %}
         {% if photo.tags %}
         <div class="mt-2">
           {% for tag in photo.tags %}
-            <span class="badge bg-light text-dark border">{{ tag }}</span>
+            <span class="badge bg-secondary text-light fw-normal" style="font-size: 0.7rem;">{{ tag }}</span>
           {% endfor %}
         </div>
         {% endif %}
+
       </div>
     </div>
   </div>
@@ -45,21 +73,20 @@ function filterGallery(category) {
   const items = document.getElementsByClassName('gallery-item');
   const buttons = document.querySelectorAll('.filter-buttons button');
 
-  // 1. Manage Active Button Styling
+  // Manage Active Button Styling
   buttons.forEach(btn => {
     btn.classList.remove('active');
-    // Simple check to highlight the clicked button
     if (btn.innerText.toLowerCase() === category || (category === 'all' && btn.innerText === 'All')) {
       btn.classList.add('active');
     }
   });
 
-  // 2. Show/Hide Images
+  // Show/Hide Images
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
     if (category === 'all') {
-      item.classList.remove('d-none'); // Bootstrap class for display:none
-      item.classList.add('animate__animated', 'animate__fadeIn'); // Optional animation
+      item.classList.remove('d-none'); 
+      item.classList.add('animate__animated', 'animate__fadeIn'); 
     } else {
       if (item.classList.contains(category)) {
         item.classList.remove('d-none');
@@ -73,7 +100,6 @@ function filterGallery(category) {
 </script>
 
 <style>
-/* Optional: specific styling for the active filter button */
 .filter-buttons .btn.active {
   background-color: var(--btn-btn-primary-bg);
   color: #fff;
