@@ -1,0 +1,10 @@
+# _data/gallery.yml
+- title: "Sunken Ship"
+  image: "https://cdn.sanchez.ph/gallery/tayud1.webp"
+  alt: "Ship sunk after Odette Typhoon"
+
+- title: "Clear Skies"
+  image: "https://cdn.sanchez.ph/gallery/tayud2.webp"
+  alt: "Clear Skies after the typhoon"
+
+
