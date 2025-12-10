@@ -1,5 +1,5 @@
 ---
-title: The Great Digital Diet Hosting 20k Photos for Free on OCI
+title: The Great Digital Diet: Hosting 20k Photos for Free on OCI
 date: 2025-12-10 22:00:00 +0800
 categories: [Self-Hosting, Cloud Projects]
 tags: [immich, immich-go, oci, cloudflare, docker, webp]
@@ -69,7 +69,7 @@ ForEach ($img in $images) {
         cwebp -q 80 "$($img.FullName)" -o "$destFile" -mt -quiet
     }
 }
-````
+```
 
 -----
 
