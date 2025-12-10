@@ -3,9 +3,13 @@ title: The Great Digital Diet Hosting 20k Photos for Free on OCI
 date: 2025-12-10 22:00:00 +0800
 categories: [Self-Hosting, Cloud Projects]
 tags: [immich, immich-go, oci, cloudflare, docker, webp]
-pin: false
+toc: true
+comments: true
+math: false
+mermaid: false
+pin: true
 image:
-  src: https://cdn.sanchez.ph/blog/webp-to-oci.webp
+  path: https://cdn.sanchez.ph/blog/webp-to-oci.webp
   alt: A treasure chest of photos being converted to WebP and uploaded to an OCI server and phone.
 ---
 
