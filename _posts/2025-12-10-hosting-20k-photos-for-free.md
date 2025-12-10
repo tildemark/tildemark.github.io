@@ -5,7 +5,7 @@ categories: [Self-Hosting, Cloud Projects]
 tags: [immich, immich-go, oci, cloudflare, docker, webp]
 pin: true
 image:
-  src: image_0.png
+  src: https://cdn.sanchez.ph/blog/webp-to-oci.webp
   alt: A treasure chest of photos being converted to WebP and uploaded to an OCI server and phone.
 ---
 
@@ -23,7 +23,7 @@ Here is the guide to shedding gigabytes, mirroring your library, and hosting it 
 
 We aren't going to delete your high-res masters (we aren't monsters). Instead, we are going to create a "Mirror" folder. Think of it as the "Instagram Body" version of your library.
 
-![Diagram showing a large JPEG file in an original folder being converted by a script into a smaller WebP file in a mirror folder.](image_1.png)
+![Diagram showing a large JPEG file in an original folder being converted by a script into a smaller WebP file in a mirror folder.](https://cdn.sanchez.ph/blog/jpg-to-webp.webp)
 
 * **Original:** `D:\Photos\2025_Xmas\DSC_001.jpg` (5MB, heavy, slow)
 * **Mirror:** `D:\WebP_Export\2025_Xmas\DSC_001.webp` (500KB, lean, fast)
@@ -145,6 +145,8 @@ echo ">> Done."
 
 ## Phase 3: The Cloud Beast (OCI + Docker)
 
+![Diagram showing how internet traffic is being handled by containerized immich inside the oci instance. ](https://cdn.sanchez.ph/blog/immich-docker-oci.webp)
+
 Now we set up the home for our fit, lightweight photos. We are using **Oracle Cloud**.
 
 **The Setup:**
@@ -257,6 +259,8 @@ Point `photos.sanchez.ph` to `immich_server` on port `2283`. Done.
 
 ## Phase 4: The Iron Dome (Cloudflare WAF)
 
+![Diagram showing a group of hackers unable to penetrate into the philippine map inside the iron dome protected by a shield.](https://cdn.sanchez.ph/blog/wap-iron-dome.webp)
+
 This is a private gallery. I don't need random bots from halfway across the world trying to guess my password.
 
 1.  Open **Cloudflare Dashboard** -\> **Security** -\> **WAF**.
@@ -314,6 +318,8 @@ Now, Cloudflare serves the tiny images, and your OCI instance barely notices you
 2.  Set **Transcoding Policy** to `Don't transcode any videos`. Your phone can play MP4s just fine.
 
 ## Conclusion
+
+![Diagram showing a woman relaxing while browsing her immich library on phone.](https://cdn.sanchez.ph/blog/immich-on-phone.webp)
 
 We took a 100GB "Dad Bod" library, put it on a WebP diet, mirrored it to the cloud, and locked it behind a geo-fenced firewall.
 
