@@ -7,7 +7,7 @@ toc: true
 comments: true
 math: false
 mermaid: false
-pin: true
+pin: false
 image:
   path: https://cdn.sanchez.ph/blog/webp-to-oci.webp
   alt: A treasure chest of photos being converted to WebP and uploaded to an OCI server and phone.
