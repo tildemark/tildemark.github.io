@@ -1,6 +1,6 @@
 ---
 title: "The Case of the Vanishing .env: How to Sync Your Secrets Without Crying"
-date: 2024-04-23
+date: 2025-12-17
 categories:
   - Development
   - Security
@@ -160,6 +160,9 @@ Need something faster than manual copying but not ready for a full-blown secret 
 
 ---
 
+
+![Undercover agent encrypting a .env file with git-crypt in a secure environment.](https://cdn.sanchez.ph/blog/undercover-agent.webp)
+
 #### Option 4: The "Undercover Agent" - Git-Crypt (The Stealthy Sync)
 
 If you absolutely, positively *must* have your `.env` file inside your Git repository for some reason (e.g., complex deployment scripts, historical logging), but still want it encrypted, `git-crypt` is your clandestine companion.
@@ -170,11 +173,11 @@ If you absolutely, positively *must* have your `.env` file inside your Git repos
 2. **Initialize:** `git crypt init` in your repo.
 3. **Specify Encrypted Files:** Create a `.gitattributes` file and tell `git-crypt` which files to encrypt (e.g., `/.env filter=git-crypt diff=git-crypt`).
 4. **Unlock:** On each machine, you'll need to "unlock" the repository using a shared key (which you secure separately, like a USB drive or a password manager).
+
 ```bash
 git crypt unlock /path/to/your/key
 
 ```
-
 
 Once unlocked, Git-crypt transparently decrypts the files when you pull and encrypts them when you push.
 
