@@ -34,6 +34,8 @@ The same happens in **Java**. The soul of Java is **Object-Oriented Programming 
 
 ## A Proposal: The "Trunk and Branch" Model
 
+![A split-screen graphic with a dark, cyber-tech aesthetic comparing two programming languages. On the left, a single, simple line of Python code reads print("Hello, World!"). On the right, a complex, multi-line block of C++ code shows the necessary structure to achieve the same result, including #include <iostream>, the int main() function, and the std::cout statement.](https://cdn.sanchez.ph/blog/hello-world-code-in-cpp-vs-python.webp)
+
 We need to stop using C as a generic "Introduction to Programming." It acts as a filter that fails students before they even understand what building software feels like.
 
 Instead, we should adopt a **Trunk and Branch** model. This unifies the first year (solving the teacher shortage) and specializes only when students are ready.
