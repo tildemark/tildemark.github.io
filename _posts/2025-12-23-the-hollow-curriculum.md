@@ -9,7 +9,7 @@ image:
   alt: A split illustration showing a complex engine block vs a simple calculator.
 ---
 
-***Context:** I studied Computer Engineering and now serve as a Head of IT hiring developers. I have seen the gap between what universities teach and what the industry needs. This is my take on how we can fix it.*
+**Context:** *I studied Computer Engineering and now serve as a Head of IT hiring developers. I have seen the gap between what universities teach and what the industry needs. This is my take on how we can fix it.*
 
 ---
 
