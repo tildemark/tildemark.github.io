@@ -1,43 +1,50 @@
-# Chirpy Starter
+# 👨‍💻 Mark Sanchez (Tildemark)
 
-[![Gem Version](https://img.shields.io/gem/v/jekyll-theme-chirpy)][gem]&nbsp;
-[![GitHub license](https://img.shields.io/github/license/cotes2020/chirpy-starter.svg?color=blue)][mit]
+[![Build Status](https://img.shields.io/github/actions/workflow/status/tildemark/tildemark.github.io/pages-deploy.yml?style=flat-square)](https://github.com/tildemark/tildemark.github.io/actions)
+[![Live Site](https://img.shields.io/website?url=https%3A%2F%2Fblog.sanchez.ph&style=flat-square&label=blog.sanchez.ph)](https://blog.sanchez.ph)
 
-When installing the [**Chirpy**][chirpy] theme through [RubyGems.org][gem], Jekyll can only read files in the folders
-`_data`, `_layouts`, `_includes`, `_sass` and `assets`, as well as a small part of options of the `_config.yml` file
-from the theme's gem. If you have ever installed this theme gem, you can use the command
-`bundle info --path jekyll-theme-chirpy` to locate these files.
+> **Welcome!** This repository houses the source code for my personal website and digital garden, accessible at [blog.sanchez.ph](https://blog.sanchez.ph).
 
-The Jekyll team claims that this is to leave the ball in the user’s court, but this also results in users not being
-able to enjoy the out-of-the-box experience when using feature-rich themes.
+## 📖 About Me
+I am a technology enthusiast and writer based in the Philippines. I use this platform to document my learning journey, share technical notes, and write about topics that interest me.
 
-To fully use all the features of **Chirpy**, you need to copy the other critical files from the theme's gem to your
-Jekyll site. The following is a list of targets:
+* **📍 Location:** Philippines
+* **🕸️ Website:** [blog.sanchez.ph](https://blog.sanchez.ph)
 
-```shell
-.
-├── _config.yml
-├── _plugins
-├── _tabs
-└── index.html
-```
+## ⚠️ Note to Forkers (CNAME)
+**If you fork this repository to build your own blog, please read this:**
 
-To save you time, and also in case you lose some files while copying, we extract those files/configurations of the
-latest version of the **Chirpy** theme and the [CD][CD] workflow to here, so that you can start writing in minutes.
+This repository contains a `CNAME` file in the root directory that binds the GitHub Pages deployment to my custom domain (`blog.sanchez.ph`).
+1.  **Delete or Edit the `CNAME` file:** Immediately after forking, delete this file or change the content to your own custom domain.
+2.  **Update `_config.yml`:** Change the `url` and `avatar` fields to match your own details.
 
-## Usage
+## 🛠️ Tech Stack
+This blog is built on the **JAMstack** architecture, designed for speed and security.
 
-Check out the [theme's docs](https://github.com/cotes2020/jekyll-theme-chirpy/wiki).
+* **Framework:** [Jekyll](https://jekyllrb.com/)
+* **Theme:** [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy) (customized)
+* **Hosting:** GitHub Pages
+* **Deployment:** GitHub Actions
 
-## Contributing
+## 🚀 Running Locally
+To test this site on your local machine:
 
-This repository is automatically updated with new releases from the theme repository. If you encounter any issues or want to contribute to its improvement, please visit the [theme repository][chirpy] to provide feedback.
+1.  **Clone the repo**
+    ```bash
+    git clone [https://github.com/tildemark/tildemark.github.io.git](https://github.com/tildemark/tildemark.github.io.git)
+    cd tildemark.github.io
+    ```
 
-## License
+2.  **Install dependencies**
+    ```bash
+    bundle install
+    ```
 
-This work is published under [MIT][mit] License.
+3.  **Run the server**
+    ```bash
+    bundle exec jekyll serve
+    ```
 
-[gem]: https://rubygems.org/gems/jekyll-theme-chirpy
-[chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy/
-[CD]: https://en.wikipedia.org/wiki/Continuous_deployment
-[mit]: https://github.com/cotes2020/chirpy-starter/blob/master/LICENSE
+## 📝 License
+Content © **Alfredo Sanchez Jr**.
+Theme source code is licensed under MIT by [Cotes Chung](https://github.com/cotes2020).
