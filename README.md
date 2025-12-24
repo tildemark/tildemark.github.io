@@ -1,4 +1,4 @@
-# 👨‍💻 Mark Sanchez (Tildemark)
+# 👨‍💻 Alfredo Sanchez Jr (Tildemark)
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/tildemark/tildemark.github.io/pages-deploy.yml?style=flat-square)](https://github.com/tildemark/tildemark.github.io/actions)
 [![Live Site](https://img.shields.io/website?url=https%3A%2F%2Fblog.sanchez.ph&style=flat-square&label=blog.sanchez.ph)](https://blog.sanchez.ph)
