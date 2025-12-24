@@ -49,6 +49,7 @@ A "Repository" (or repo) is basically a project folder.
 1. In your repo, click **Add file** > **Create new file**.
 2. Name it `index.html`.
 3. Paste this "Starter Code":
+
 ```html
 <!DOCTYPE html>
 <html>
@@ -61,6 +62,7 @@ A "Repository" (or repo) is basically a project folder.
 ```
 
 4. Click **Commit changes**.
+5. Preview your page on your browser at: http://yourusername.github.io
 
 ### Option B: The "Professional" (Chirpy Theme)
 
@@ -122,7 +124,7 @@ If you chose Chirpy, you write in **Markdown** (`.md`). It’s simpler than codi
 | **Links** | `[Click Me](https://google.com)` | [Click Me](https://google.com) |
 | **Images** | `![Alt Text](url-to-image.jpg)` | Displays the image |
 | **Quotes** | `> This is a quote` | Blockquotes |
-| **Code** | ``inline code`` | `inline code` |
+| **Code** | `` `inline code` `` | `inline code` |
 
 ---
 
