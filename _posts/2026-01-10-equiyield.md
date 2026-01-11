@@ -198,11 +198,6 @@ graph TD
     %% Connections (Internal)
     Server -- "Port 5432" --> DB
     Server -- "Port 6379" --> Cache
-
-    %% Styling cues for Mermaid rendering
-    classDef default fill:transparent,stroke:#666,stroke-width:2px,color:var(--text-color);
-    classDef ingress fill:var(--card-bg),stroke:var(--link-color),stroke-width:3px;
-    class NPM ingress;
 ```
 
 ## Demo Data
