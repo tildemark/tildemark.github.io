@@ -1,6 +1,6 @@
 ---
 title: "I Built a Wordle Solver Because I Hate Losing"
-date: 2026-02-03 12:00:00 +0800
+date: 2026-02-02 12:00:00 +0800
 categories: [Projects, Web Development]
 tags: [nextjs, tailwind, typescript, tools, humor]
 image:
