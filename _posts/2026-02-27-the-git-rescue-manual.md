@@ -24,9 +24,9 @@ Git is a powerful tool, but its "undo" buttons are powerful too, often obscure, 
 These errors usually pop up when you are connecting an existing folder to a new remote repository.
 
 ### Scenario 1. The "I’m trying to add a remote that already exists" Error
-**The Problem:** You try to link your local folder to GitHub, but Git shouts: `error: remote origin already exists.`
-**The Cause:** You already initialized Git and added a remote nickname (usually `origin`), and now you are trying to add the same nickname again.
-**The Fix:** You don't need to *add* it; you need to *update* the existing nickname's URL.
+**The Problem:** You try to link your local folder to GitHub, but Git shouts: `error: remote origin already exists.`  
+**The Cause:** You already initialized Git and added a remote nickname (usually `origin`), and now you are trying to add the same nickname again.  
+**The Fix:** You don't need to *add* it; you need to *update* the existing nickname's URL.  
 ```bash
 git remote set-url origin [https://github.com/user/repo.git](https://github.com/user/repo.git)
 
@@ -34,9 +34,9 @@ git remote set-url origin [https://github.com/user/repo.git](https://github.com/
 
 ### Scenario 2. Overwriting Your Messy Local Branch with the Remote
 
-**The Problem:** Your local branch has diverged so much from `origin/main` that it's a lost cause. You just want your local files to match exactly what is currently on GitHub.
-**The Cause:** Divergent branch history (local and remote have unique commits).
-**The Fix:** This will permanently delete all unique local commits and uncommitted changes on your current branch.
+**The Problem:** Your local branch has diverged so much from `origin/main` that it's a lost cause. You just want your local files to match exactly what is currently on GitHub.  
+**The Cause:** Divergent branch history (local and remote have unique commits).  
+**The Fix:** This will permanently delete all unique local commits and uncommitted changes on your current branch.  
 
 ```bash
 git fetch origin
@@ -52,9 +52,9 @@ If you made these mistakes but *haven't pushed* yet, troubleshooting is generall
 
 ### Scenario 3. "Oops, I committed to the wrong branch"
 
-**The Problem:** You finished a feature, ran `git commit`, only to realize you were on `main` the whole time.
-**The Cause:** Working too fast and not checking `git branch` first.
-**The Fix:** Move the work to a new branch and "rewind" your current branch (`main`).
+**The Problem:** You finished a feature, ran `git commit`, only to realize you were on `main` the whole time.  
+**The Cause:** Working too fast and not checking `git branch` first.  
+**The Fix:** Move the work to a new branch and "rewind" your current branch (`main`).  
 
 ```bash
 git branch feature-branch    # 1. Create the new branch containing your work
@@ -65,9 +65,9 @@ git checkout feature-branch  # 3. Switch to your feature branch to continue
 
 ### Scenario 4. "I need to fix that last commit message"
 
-**The Problem:** You pushed a commit with an embarrassing typo like "Add core featre."
-**The Cause:** Speed-typing or a lack of coffee.
-**The Fix:** Amend the previous commit.
+**The Problem:** You pushed a commit with an embarrassing typo like "Add core featre."  
+**The Cause:** Speed-typing or a lack of coffee.  
+**The Fix:** Amend the previous commit.  
 
 ```bash
 git commit --amend -m "Add core feature"
@@ -78,9 +78,9 @@ git commit --amend -m "Add core feature"
 
 ### Scenario 5. "I forgot to add one file to my commit"
 
-**The Problem:** You committed your changes but realized you forgot to include that one utility script.
-**The Cause:** You didn't run `git status` or use `git add .` effectively.
-**The Fix:** Stage the file and "tack it on" to the previous commit without changing the message.
+**The Problem:** You committed your changes but realized you forgot to include that one utility script.  
+**The Cause:** You didn't run `git status` or use `git add .` effectively.  
+**The Fix:** Stage the file and "tack it on" to the previous commit without changing the message.  
 
 ```bash
 git add forgotten-file.js
@@ -90,9 +90,9 @@ git commit --amend --no-edit
 
 ### Scenario 6. "The Nuclear Option": Resetting all uncommitted work
 
-**The Problem:** You’ve been experimenting with code for an hour, your changes are a disaster, and you just want to go back to the way things were when you made your last commit.
-**The Cause:** Failed experimentation.
-**The Fix:** This permanently wipes all local, uncommitted changes (both staged and unstaged).
+**The Problem:** You’ve been experimenting with code for an hour, your changes are a disaster, and you just want to go back to the way things were when you made your last commit.  
+**The Cause:** Failed experimentation.  
+**The Fix:** This permanently wipes all local, uncommitted changes (both staged and unstaged).  
 
 ```bash
 git reset --hard HEAD
@@ -101,8 +101,8 @@ git reset --hard HEAD
 
 ### Scenario 7. "I accidentally deleted a file locally"
 
-**The Problem:** You manually deleted `style.css` (using `rm` or your OS file manager) and want it back as it was in the last commit.
-**The Fix:** Restore it from Git's tracking.
+**The Problem:** You manually deleted `style.css` (using `rm` or your OS file manager) and want it back as it was in the last commit.  
+**The Fix:** Restore it from Git's tracking.  
 
 ```bash
 git restore style.css
@@ -117,9 +117,9 @@ These scenarios are more complex because they involve rewriting Git history that
 
 ### Scenario 8. "I committed sensitive data (API keys, .env)"
 
-**The Problem:** You accidentally committed your `.env` file containing production keys.
-**The Cause:** You didn't use a `.gitignore` file before adding files.
-**The Fix:** Remove the file from Git's tracking but keep it on your computer.
+**The Problem:** You accidentally committed your `.env` file containing production keys.  
+**The Cause:** You didn't use a `.gitignore` file before adding files.  
+**The Fix:** Remove the file from Git's tracking but keep it on your computer.  
 
 ```bash
 git rm --cached .env            # 1. Stop tracking the file
@@ -133,8 +133,8 @@ git commit -m "Remove sensitive data"  # 3. Commit the removal
 
 ### Scenario 9. "Who broke this line of code?" (The Power of Blame)
 
-**The Problem:** You found a bug in a complex file and need to know who changed that line, and what commit introduced it.
-**The Fix:**
+**The Problem:** You found a bug in a complex file and need to know who changed that line, and what commit introduced it.  
+**The Fix:**  
 
 ```bash
 git blame filename.js
@@ -145,9 +145,9 @@ git blame filename.js
 
 ### Scenario 10. Understanding "Accidental Detached HEAD"
 
-**The Problem:** Git says you are in a "detached HEAD" state. It sounds scary.
-**The Cause:** You checked out a specific *commit* (e.g., `git checkout <SHA>`) or a tag, rather than a branch. You are viewing a snapshot, not working on a moving timeline.
-**The Fix:** If you just want to get back to your branch, just checkout your branch name:
+**The Problem:** Git says you are in a "detached HEAD" state. It sounds scary.  
+**The Cause:** You checked out a specific *commit* (e.g., `git checkout <SHA>`) or a tag, rather than a branch. You are viewing a snapshot, not working on a moving timeline.  
+**The Fix:** If you just want to get back to your branch, just checkout your branch name:  
 
 ```bash
 git checkout main
@@ -169,9 +169,9 @@ These scenarios handle conflicts and synchronizing with repositories you don't d
 
 ### Scenario 11. "I need to temporarily switch branches without committing my messy work"
 
-**The Problem:** You're mid-task, but a bug fix is needed immediately on another branch. You aren't ready to make a commit of your messy work-in-progress.
-**The Cause:** Interruptions in flow.
-**The Fix:** Use the Stash.
+**The Problem:** You're mid-task, but a bug fix is needed immediately on another branch. You aren't ready to make a commit of your messy work-in-progress.  
+**The Cause:** Interruptions in flow.  
+**The Fix:** Use the Stash.  
 
 ```bash
 git stash          # 1. Temporarily save your work (staged and unstaged)
@@ -184,8 +184,8 @@ git stash pop      # 4. Bring your messy work back
 
 ### Scenario 12. Recovering a Branch You Deleted By Mistake
 
-**The Problem:** You thought you were done with a branch and ran `git branch -D old-feature`, only to realize you needed that code.
-**The Fix:** Use the Reflog—Git’s ultimate safety net that records almost every action.
+**The Problem:** You thought you were done with a branch and ran `git branch -D old-feature`, only to realize you needed that code.  
+**The Fix:** Use the Reflog—Git’s ultimate safety net that records almost every action.  
 
 ```bash
 git reflog
@@ -196,9 +196,9 @@ git checkout -b recovered-branch <SHA_ID> # 2. Create a branch at that SHA
 
 ### Scenario 13. Aborting a Merge Panic (or Conflicts Overflow)
 
-**The Problem:** You ran `git merge`, and Git screams that files are in conflict (`<<<<<<< HEAD`). You are overwhelmed.
-**The Cause:** Overlapping changes between branches.
-**The Fix:** Back out of the merge entirely and return to the pre-merge state.
+**The Problem:** You ran `git merge`, and Git screams that files are in conflict (`<<<<<<< HEAD`). You are overwhelmed.  
+**The Cause:** Overlapping changes between branches.  
+**The Fix:** Back out of the merge entirely and return to the pre-merge state.  
 
 ```bash
 git merge --abort
@@ -215,9 +215,9 @@ git commit -m "Resolved merge conflicts"
 
 ### Scenario 14. "Git refuses to pull/merge due to unrelated histories"
 
-**The Problem:** You are pulling changes from a completely different repository into your local folder, and Git says `fatal: refusing to merge unrelated histories`.
-**The Cause:** Git is protecting you. It doesn't know if these two separate codebases should be mixed.
-**The Fix:** Use the special flag (if you know what you are doing!).
+**The Problem:** You are pulling changes from a completely different repository into your local folder, and Git says `fatal: refusing to merge unrelated histories`.  
+**The Cause:** Git is protecting you. It doesn't know if these two separate codebases should be mixed.  
+**The Fix:** Use the special flag (if you know what you are doing!).  
 
 ```bash
 git pull origin main --allow-unrelated-histories
@@ -226,9 +226,9 @@ git pull origin main --allow-unrelated-histories
 
 ### Scenario 15. The Forked Workflow: Pulling Updates from "Upstream"
 
-**The Problem:** You forked a big project (like an open-source library), and now you need to pull the newest official updates into your personal fork.
-**The Cause:** Standard maintenance in a fork/PR workflow.
-**The Fix:** Add the original repository as a new remote (typically named `upstream`), then pull from it.
+**The Problem:** You forked a big project (like an open-source library), and now you need to pull the newest official updates into your personal fork.  
+**The Cause:** Standard maintenance in a fork/PR workflow.  
+**The Fix:** Add the original repository as a new remote (typically named `upstream`), then pull from it.  
 
 ```bash
 # 1. Link to the original, main project (only do this once)
@@ -251,9 +251,9 @@ git push origin main
 
 ### Scenario 16. The Dreaded "Large File Detected" (GitHub File Limit)
 
-**The Problem:** You try to push your code to GitHub, and it fails with an error: `File <PATH> is 120.00 MB; this exceeds GitHub's file size limit of 100.00 MB.`
-**The Cause:** GitHub restricts files over 100MB (and warns over 50MB).
-**The Fix:** Do not include large assets in Git history.
+**The Problem:** You try to push your code to GitHub, and it fails with an error: `File <PATH> is 120.00 MB; this exceeds GitHub's file size limit of 100.00 MB.`  
+**The Cause:** GitHub restricts files over 100MB (and warns over 50MB).  
+**The Fix:** Do not include large assets in Git history.  
 
 ```bash
 # 1. Unstage the large file if it's currently staged
@@ -269,9 +269,9 @@ git commit --amend --no-edit
 
 ### Scenario 17. When to Use (and When to Avoid) `git push --force`
 
-**The Problem:** You amended your last commit (Scenario 4 or 5). When you try to push, Git says your branch is behind the remote.
-**The Cause:** You rewrote local history that already exists on the server. The server won't accept your history update.
-**The Fix:** You must *force* the server to accept your revised timeline.
+**The Problem:** You amended your last commit (Scenario 4 or 5). When you try to push, Git says your branch is behind the remote.  
+**The Cause:** You rewrote local history that already exists on the server. The server won't accept your history update.  
+**The Fix:** You must *force* the server to accept your revised timeline.  
 
 ```bash
 git push --force
@@ -283,8 +283,8 @@ git push --force
 
 ### Scenario 18. Checking Which Commits Will Be Included in a Pull Request
 
-**The Problem:** You are working on a feature and want to see exactly which unique commits your branch (`feature`) will add if you open a Pull Request against `main`.
-**The Fix:** Use the triple dot `...` syntax in `git log`.
+**The Problem:** You are working on a feature and want to see exactly which unique commits your branch (`feature`) will add if you open a Pull Request against `main`.  
+**The Fix:** Use the triple dot `...` syntax in `git log`.  
 
 ```bash
 git log main...feature --oneline

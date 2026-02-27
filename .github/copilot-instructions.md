@@ -5,6 +5,7 @@
 This is a **Jekyll blog** powered by the **Chirpy theme**, deployed to GitHub Pages at `blog.sanchez.ph`. The site is built from Markdown posts and deployed via GitHub Actions.
 
 ### Key Architecture
+
 - **Content**: Posts in `_posts/` (YAML frontmatter + Markdown), drafts in `_drafts/`
 - **Theme**: `jekyll-theme-chirpy` (Ruby gem) - manages layouts, styles, and components
 - **Build**: `bundle exec jekyll build` (production) or `bundle exec jekyll s -l` (dev)
@@ -15,6 +16,7 @@ This is a **Jekyll blog** powered by the **Chirpy theme**, deployed to GitHub Pa
 ## Essential Workflows
 
 ### Development
+
 ```bash
 # Run dev server with live reload (localhost:4000)
 ./tools/run.sh
@@ -27,6 +29,7 @@ This is a **Jekyll blog** powered by the **Chirpy theme**, deployed to GitHub Pa
 ```
 
 ### Testing & Deployment
+
 ```bash
 # Build and validate HTML (runs html-proofer)
 ./tools/test.sh
@@ -40,20 +43,22 @@ Both scripts are in `tools/` with bash utilities for config parsing and error ha
 ## Post Structure & Conventions
 
 ### File Naming
+
 Posts follow pattern: `_posts/YYYY-MM-DD-slug-title.md` (e.g., `2025-12-02-from-c-to-typeScript.md`)
 
 ### YAML Frontmatter (Required Fields)
+
 ```yaml
 ---
 title: "Post Title"
 date: 2025-12-02 08:00:00 +0800
 categories: [Category1, Category2]
 tags: [tag1, tag2, tag3]
-toc: true                    # Table of contents
+toc: true # Table of contents
 comments: true
-math: false                  # Enable KaTeX math
-mermaid: false              # Enable Mermaid diagrams
-pin: false                  # Pin to top
+math: false # Enable KaTeX math
+mermaid: false # Enable Mermaid diagrams
+pin: false # Pin to top
 image:
   path: https://cdn.sanchez.ph/blog/image.webp
   alt: "Alt text"
@@ -61,6 +66,7 @@ image:
 ```
 
 ### Content Patterns
+
 - **Images**: Use absolute CDN URLs (https://cdn.sanchez.ph/blog/*)
 - **Math**: Wrapped in `$...$` (inline) or `$$...$$` (block) when `math: true`
 - **Links**: Relative paths for internal pages (e.g., `/about`)
