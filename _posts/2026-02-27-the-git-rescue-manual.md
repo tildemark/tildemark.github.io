@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "The Git Rescue Manual: 18 Scenarios to Save Your Code and Sanity"
-date: 2024-05-20 09:00:00 +0800
+date: 2026-02-27 09:00:00 +0800
 categories: [Development, Git]
 tags: [git, troubleshooting, devops, workflow, aliases, bash]
 image:
