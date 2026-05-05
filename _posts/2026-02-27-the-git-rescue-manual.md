@@ -7,7 +7,6 @@ tags: [git, troubleshooting, devops, workflow, aliases, bash]
 image:
   path: https://cdn.sanchez.ph/blog/git-rescue-preview.webp
   alt: A stylized illustration of a developer rescuing and stabilizing code repositories in a digital world.
-pin: true
 ---
 
 We've all had that moment. The terminal returns a sharp red error message, your working directory is a mess, and your heart skips a beat. Maybe you committed a production password, or a complex merge turned your code into a soup of `<<<<<<<` and `=======`. 
