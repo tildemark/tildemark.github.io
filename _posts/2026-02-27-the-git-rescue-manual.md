@@ -374,3 +374,5 @@ echo "✅ Sync complete! Your fork is now up to date."
 
 What’s the scariest Git problem you’ve ever had to troubleshoot? Let me know in the comments!
 
+
+*"Update: Now that you can fix your repo, learn how to [back it up to Gitea](https://blog.sanchez.ph/posts/git-redundancy/)."*
