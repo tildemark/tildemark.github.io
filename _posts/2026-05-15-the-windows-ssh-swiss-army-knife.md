@@ -28,7 +28,7 @@ If you are on Windows 10 or 11, you already have these tools built-in. This guid
 
 ---
 
-<span id=privacy-tunnel></span>
+<span id="privacy-tunnel"></span>
 
 ## 1. The Privacy Tunnel: Browsing with your Server's IP
 **Goal:** You want to browse the internet so that websites see your server’s IP address instead of your own. This is like a DIY VPN.[cite: 1]
@@ -55,7 +55,7 @@ ssh -D 1080 user@host.domain.net
 
 
 ---
-<span id=jump-host></span>
+<span id="jump-host"></span>
 
 ## 2. The Jump Host: Accessing Private Servers
 
