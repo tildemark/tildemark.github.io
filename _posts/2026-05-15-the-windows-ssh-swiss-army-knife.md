@@ -11,7 +11,7 @@ image:
   alt: Diagram showing a The Windows SSH Swiss Army Knife.
 ---
 
-<a name="top"></a>
+<a id="top"></a>
 In the world of IT and shipping logistics, we often deal with remote servers, private databases, and the need for secure connections. While many think of SSH (Secure Shell) as just a way to type commands into a remote computer, it is actually a powerful networking tool.[cite: 1]
 
 If you are on Windows 10 or 11, you already have these tools built-in. This guide will take you from "What is SSH?" to managing your own secure tunnels and remote filesystems.[cite: 1]
@@ -27,12 +27,12 @@ If you are on Windows 10 or 11, you already have these tools built-in. This guid
 
 ---
 
-<a name="privacy-tunnel"></a>
+<a id="privacy-tunnel"></a>
 
 ## 1. The Privacy Tunnel: Browsing with your Server's IP
 **Goal:** You want to browse the internet so that websites see your server’s IP address instead of your own. This is like a DIY VPN.[cite: 1]
 
-![Privacy Tunnel](https://cdn.sanchez.ph/blog/privacy-tunnel.webp)
+![Diagram illustrating an SSH Dynamic SOCKS Proxy (DIY VPN)](https://cdn.sanchez.ph/blog/privacy-tunnel.webp)
 
 **The PowerShell Command:**
 ```powershell
@@ -54,7 +54,7 @@ ssh -D 1080 user@host.domain.net
 
 
 ---
-<a name="jump-host"></a>
+<a id="jump-host"></a>
 
 ## 2. The Jump Host: Accessing Private Servers
 
@@ -73,7 +73,7 @@ Windows creates a secure bridge through the middle server. Your password/keys ar
 
 ---
 
-<a name="projector"></a>
+<a id="projector"></a>
 
 ## 3. The Projector: Showing Local Work to the World
 
@@ -93,7 +93,7 @@ ssh -R 8080:localhost:3000 user@host.domain.net
 
 
 ---
-<a name="virtual-drive"></a>
+<a id="virtual-drive"></a>
 
 ## 4. The Virtual Drive: Remote File Management
 
@@ -114,7 +114,7 @@ Download [WinSCP](https://winscp.net/). It gives you a "Split Screen" view. Left
 
 
 ---
-<a name="shortcut-system"></a>
+<a id="shortcut-system"></a>
 
 ## 5. The Shortcut System: Using SSH Config
 
