@@ -221,6 +221,3 @@ pbcopy < ~/.ssh/id_ed25519.pub
 
 *(For Linux, use `xclip -sel clip < ~/.ssh/id_ed25519.pub` or `cat ~/.ssh/id_ed25519.pub` and copy it manually).*
 
-```
-
-```
