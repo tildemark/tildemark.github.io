@@ -1,7 +1,7 @@
 ---
 title: "The Great Digital Diet: Hosting 20k Photos for Free on OCI"
 date: 2025-12-10 22:00:00 +0800
-categories: [Self-Hosting, Cloud Projects]
+categories: [self-hosting, cloud-projects]
 tags: [immich, immich-go, oci, cloudflare, docker, webp]
 toc: true
 comments: true

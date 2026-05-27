@@ -1,7 +1,7 @@
 ---
 title: I Ignored PowerShell for 15 Years. Then an AI Wrote Me a Regex.
 date: 2026-02-06 08:00:00 +0800
-categories: [Development, DevOps]
+categories: [development, devops]
 tags: [powershell, regex, perl, automation, ai, productivity]
 image:
   path: https://cdn.sanchez.ph/blog/powershell-regex-preview.webp

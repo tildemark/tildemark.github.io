@@ -2,7 +2,7 @@
 layout: post
 title: "Git Redundancy: Mirroring GitHub to Gitea"
 date: 2026-05-05 09:00:00 +0800
-categories: [DevOps, Git]
+categories: [devops, git]
 tags: [gitea, github, self-hosting, backup, devops]
 description: "How to move beyond a single point of failure by maintaining multiple remotes and automated mirrors."
 image:

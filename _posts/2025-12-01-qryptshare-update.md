@@ -1,8 +1,8 @@
 ---
 title: QRyptshare v1.1.0 - Custom Styling, Frames & New Formats
 date: 2025-12-01 12:00:00 +0800
-categories: [Development, Releases]
-tags: [Next.js, Docker, Privacy, Open Source, Update]
+categories: [development, releases]
+tags: [nextjs, docker, privacy, open-source, update]
 image:
   path: https://cdn.sanchez.ph/blog/qryptshare-v1-1-0-header.webp
   alt: QRyptshare v1.1.0 Custom Styling Interface

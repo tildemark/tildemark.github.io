@@ -1,7 +1,7 @@
 ---
 title: "How to Build Your Free Website or Blog: From Simple HTML to Professional Chirpy Theme"
 date: 2025-12-24 8:00:00 +0800
-categories: [Tutorial, Web Dev]
+categories: [tutorial, webdev]
 tags: [github pages, chirpy, html, beginners, markdown]
 description: "A comprehensive, step-by-step guide for students and beginners to build a 100% free professional blog using GitHub Pages. Learn how to code a simple HTML site or launch a stunning dark-mode 'Chirpy' theme without spending a cent."
 image:

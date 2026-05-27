@@ -1,8 +1,8 @@
 ---
 title: "How to Create an Automated Employee Exit Pass Form with Unique Tracking Numbers in Microsoft Word (LAN-Based Setup)"
 date: 2025-10-29 14:00:00 +0800
-categories: [VBA, Microsoft Word]
-tags: [Word, Template, Macro, Tutorial, VBA, Automation]
+categories: [vba, word]
+tags: [word, template, macro, tutorial, vba, automation]
 description: "How to set up a LAN-based Exit Pass form with automatic tracking numbers using Microsoft Word templates (.dotm) — no API required."
 status: "Phase 1 – LAN-based. API integration planned."
 toc: true

@@ -4,7 +4,7 @@ title: "The Windows SSH Swiss Army Knife: A Complete Guide to Tunnels, VPNs, and
 date: 2026-05-15
 author: asanchez
 categories: [Infrastructure, Networking]
-tags: [SSH, Windows, Windows Terminal, SysAdmin]
+tags: [ssh, windows, terminal, sysadmin]
 description: "A complete guide to mastering SSH tunnels, SOCKS proxies, and remote routing on Windows."
 image:
   path: https://cdn.sanchez.ph/blog/swiss-army-knife.webp

@@ -1,7 +1,7 @@
 ---
 title: "Building EquiYield: A Full-Stack Cooperative Management System"
 date: 2026-01-10 20:00:00 +0800
-categories: [Projects, Full-Stack]
+categories: [projects, full-stack]
 tags: [nextjs, typescript, prisma, docker, postgresql, redis, express, deployment, oci]
 mermaid: true
 image:

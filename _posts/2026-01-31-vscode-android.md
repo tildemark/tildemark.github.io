@@ -1,7 +1,7 @@
 ---
 title: My Galaxy Tab S7+ Just Ate My Laptop for Breakfast (How to Run Full VS Code on Android)
 date: 2026-01-31 12:00:00 +0800
-categories: [Development, Android]
+categories: [development, android]
 tags: [vscode, samsung-dex, termux, productivity, tutorial]
 image:
   path: https://cdn.sanchez.ph/blog/vscode-android-banner.webp

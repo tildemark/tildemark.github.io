@@ -1,8 +1,8 @@
 ---
 title: Building a Privacy-First QR Code Generator (QRyptshare) on OCI, Docker & Next.js
 date: 2025-11-29 10:00:00 +0800
-categories: [Development, Cloud]
-tags: [Next.js, Docker, OCI, Privacy, Open Source, Capacitor, Frontend]
+categories: [development, cloud]
+tags: [nextjs, docker, oci, privacy, open-source, capacitor, frontend]
 image: 
   path: https://cdn.sanchez.ph/blog/qryptshare-blog-preview.webp
   alt: Privacy-First QR Code Generator (QRyptshare) on OCI, Docker & Next.js

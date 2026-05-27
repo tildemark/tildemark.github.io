@@ -2,9 +2,9 @@
 title: "The Case of the Vanishing .env: How to Sync Your Secrets Without Crying"
 date: 2025-12-17
 categories:
-  - Development
-  - Security
-  - Git
+  - development
+  - security
+  - git
 tags:
   - .env
   - environment variables

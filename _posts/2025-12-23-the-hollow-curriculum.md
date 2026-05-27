@@ -1,7 +1,7 @@
 ---
 title: "The Hollow Curriculum: Why Teaching C Without Pointers is Useless"
 date: 2025-12-23 14:00:00 +0800
-categories: [Education, Opinion]
+categories: [education, opinion]
 tags: [cpe, cs, education, philippines, java, c++, data science]
 mermaid: true
 image:

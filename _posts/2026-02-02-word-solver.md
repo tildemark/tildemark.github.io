@@ -1,7 +1,7 @@
 ---
 title: "I Built a Wordle Solver Because I Hate Losing"
 date: 2026-02-02 12:00:00 +0800
-categories: [Projects, Web Development]
+categories: [projects, webdev]
 tags: [nextjs, tailwind, typescript, tools, humor]
 image:
   path: https://cdn.sanchez.ph/blog/word-solver-preview.webp 

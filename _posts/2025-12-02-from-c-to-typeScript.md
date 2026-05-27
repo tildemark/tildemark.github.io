@@ -1,7 +1,7 @@
 ---
 title: "From C++ to TypeScript: A Dinosaur's Journey Back to the Future"
 date: 2025-12-02 08:00:00 +0800
-categories: [DevLog, Personal]
+categories: [devlog, personal]
 tags: [history, javascript, typescript, ci/cd, wordpress, movable-type]
 toc: true
 comments: true

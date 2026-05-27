@@ -2,7 +2,7 @@
 layout: post
 title: "Git & Terminal Commands Cheat Sheet for Developers"
 date: 2026-05-25 08:00:00 +0800
-categories: [Development, Cheat Sheet]
+categories: [development, cheat-sheet]
 tags: [git, docker, terminal, workflow, npm, ssh]
 description: "A collection of essential Git, Docker, SSH, and terminal commands every developer needs in their arsenal."
 image:

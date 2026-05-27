@@ -2,7 +2,7 @@
 layout: post
 title: "The Git Rescue Manual: 18 Scenarios to Save Your Code and Sanity"
 date: 2026-02-27 09:00:00 +0800
-categories: [Development, Git]
+categories: [development, git]
 tags: [git, troubleshooting, devops, workflow, aliases, bash]
 image:
   path: https://cdn.sanchez.ph/blog/git-rescue-preview.webp
