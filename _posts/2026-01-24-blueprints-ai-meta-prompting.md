@@ -2,7 +2,7 @@
 title: "I Built a Robot to Talk to the Robot (So I Don't Have To)"
 date: 2026-01-24 14:00:00 +0800
 categories: [coding, ai-experiments]
-tags: [artificial intelligence, gemini, nextjs, oci, automation]
+tags: [ai, gemini, nextjs, oci, automation]
 image:
   path: https://cdn.sanchez.ph/blog/blueprints-ai-preview.webp
   alt: "The Blueprints.ai interface running on OCI, showing a recursive prompt generation"

@@ -7,7 +7,6 @@ categories:
   - git
 tags:
   - .env
-  - environment variables
   - security
   - gitignore
   - secrets
