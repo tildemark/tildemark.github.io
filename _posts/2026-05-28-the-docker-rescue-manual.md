@@ -7,7 +7,7 @@ tags: [docker, docker-compose, troubleshooting, terminal, cheat-sheet, cicd]
 excerpt: "When your stack refuses to deploy or containers crash in an endless loop, you need a reliable set of commands to diagnose the issue. Here is your Docker troubleshooting Swiss Army knife."
 image:
   path: https://cdn.sanchez.ph/blog/docker-rescue-manual.webp
-  alt: Digital illustration of a developer sitting at a desk with a laptop.
+  alt: The image features a stylized Docker whale in a lifebuoy rescuing a container from waves on a dark, technical background with terminal text and circuit patterns.
 ---
 
 If you’ve worked with Docker long enough, you know the feeling: an image builds perfectly on your local machine, but the moment it hits the CI/CD pipeline or the staging server, it crashes and burns. Or worse, the container says it's "running," but your app is throwing 404s because a crucial configuration file is missing. 
