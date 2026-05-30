@@ -91,7 +91,7 @@ You don't need to be an expert in DevOps to deploy this. GitHub has a "Configure
 
 ---
 
-## 5. Your Portfolio is Live!
+## 5. Your Portfolio is Live
 
 ![Diagram illustrating the CI/CD pipeline for deploying a Next.js application to GitHub Pages](https://cdn.sanchez.ph/blog/automated-pipeline.webp)
 
@@ -101,7 +101,7 @@ Once you commit that file, GitHub will automatically trigger the deployment.
 2. You will see a process running. Once it turns green, your site is live!
 3. Go back to **Settings > Pages** to see your URL (e.g., `[https://yourname.github.io/my-portfolio/](https://yourname.github.io/my-portfolio/)`).
 
-### Why this is a "Software Factory" approach:
+### Why this is a "Software Factory" approach
 
 By using this method, you aren't just creating a "static page." You are implementing a **CI/CD (Continuous Integration/Continuous Deployment) pipeline**.
 
