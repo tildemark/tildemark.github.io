@@ -221,3 +221,49 @@ pbcopy < ~/.ssh/id_ed25519.pub
 
 *(For Linux, use `xclip -sel clip < ~/.ssh/id_ed25519.pub` or `cat ~/.ssh/id_ed25519.pub` and copy it manually).*
 
+## 9. Real-World Workflow: Syncing Master from Upstream & Merging into a Feature Branch
+
+Here is a practical, step-by-step terminal workflow for when an upstream repository has updates, and you need to bring your local `master` branch up to date and merge those updates into your current feature branch.
+
+### The Step-by-Step Commands
+
+```bash
+# 1. Verify your current remotes and check working directory status
+git remote -v
+git status
+
+# 2. Add the upstream remote (if not already added) and fetch the latest changes
+git remote add upstream <upstream-repository-url>
+git fetch upstream
+
+# 3. Switch to your local master branch
+git checkout master
+
+# 4. Compare the last few commits of local master vs. upstream master
+git log --oneline -n 5 master
+echo "---"
+git log --oneline -n 5 upstream/master
+
+# 5. Merge the upstream changes into your local master branch
+git merge upstream/master
+
+# 6. Push the updated master branch to your origin fork
+git push origin master
+
+# 7. Switch to your active feature branch
+git checkout feature/it-ticket-access-fix
+
+# 8. Merge the updated master branch into your feature branch
+git merge master
+
+# 9. Push the updated feature branch to your origin fork
+git push origin feature/it-ticket-access-fix
+```
+
+### Summary of Actions Taken
+
+*   **Added & Fetched Upstream:** Configured the `upstream` remote pointing to the main repository and retrieved the latest branches and changes.
+*   **Updated Local master:** Checked out local `master` and merged `upstream/master` into it cleanly.
+*   **Pushed Local master:** Updated your personal fork (`origin/master`) with the merged changes.
+*   **Merged into Feature Branch:** Checked out the feature branch (`feature/it-ticket-access-fix`), merged the updated `master` into it (cleanly auto-merging files like `assets/customs/custom-functions.js`), and pushed the updated feature branch to `origin/feature/it-ticket-access-fix`.
+
