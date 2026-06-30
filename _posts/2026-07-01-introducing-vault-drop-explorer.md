@@ -1,6 +1,6 @@
 ---
 title: Introducing Vault Drop Explorer — A Lightweight S3 and OCI Desktop File Manager
-date: 2026-07-01 12:00:00 +0000
+date: 2026-06-30 12:00:00 +0000
 categories: [projects, tools]
 tags: [s3, oci, aws, tauri, rust, react]
 image:
@@ -59,4 +59,3 @@ You can download the stable release (`v1.0.0`) directly from GitHub:
 *   **Web Version**: Try it online at [vaultdrop.sanchez.ph](https://vaultdrop.sanchez.ph)
 *   **Source Code**: Check out the repository on [GitHub](https://github.com/tildemark/vault-drop-explorer)
 
-*Dev: Alfredo Sanchez, Jr (sanchez.ph)*
