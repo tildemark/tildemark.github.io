@@ -152,5 +152,6 @@ In **v1.2.0**, I replaced CLI silent printing with the native OS print workflow.
 
 CCard Studio is open source under the MIT License.
 
+- **Web App / Landing Page:** [ccard.sanchez.ph](https://ccard.sanchez.ph)
 - **GitHub Repository:** [tildemark/ccard-studio](https://github.com/tildemark/ccard-studio)
 - **Latest Release:** [CCard Studio v1.2.0 Release](https://github.com/tildemark/ccard-studio/releases/tag/v1.2.0)
