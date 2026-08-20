@@ -14,7 +14,7 @@ At first, doing this for one or two people was fine. But as more team members re
 
 That pain point led me to build **CCard Studio (v1.2.0)** — a dedicated web and desktop app designed specifically for designing calling cards and outputting 10-up A4 print sheets automatically.
 
-> 🚀 **Try the Live Online App:** You can try out the full interactive designer in your browser right now at **[ccard.sanchez.ph](https://ccard.sanchez.ph/)**!
+> 🚀 **Live Online Preview & Editor:** You can open, edit, and preview `.ccard` project files directly in your browser without installing anything at **[ccard.sanchez.ph](https://ccard.sanchez.ph/)** — perfect for sending `.ccard` files to colleagues so they can review designs before printing!
 
 Here is how CCard Studio works and how the technical pipeline handles design, data mapping, and printing.
 
