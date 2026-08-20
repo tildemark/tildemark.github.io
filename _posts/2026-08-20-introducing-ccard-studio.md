@@ -1,6 +1,6 @@
-﻿---
+---
 title: Introducing CCard Studio v1.2.0 — Open-Source Calling Card Designer and A4 Print Suite
-date: 2026-08-20 12:00:00 +0000
+date: 2026-08-20 12:00:00 +0800
 categories: [projects, tools]
 tags: [nextjs, fabricjs, tauri, rust, react, typescript, pdf, printing]
 image:
