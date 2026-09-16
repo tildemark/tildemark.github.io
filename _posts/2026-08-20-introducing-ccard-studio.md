@@ -1,4 +1,4 @@
----
+﻿---
 title: Introducing CCard Studio v1.2.0 — Open-Source Calling Card Designer and A4 Print Suite
 date: 2026-08-20 12:00:00 +0800
 categories: [projects, tools]
@@ -26,7 +26,8 @@ CCard Studio simplifies both the visual design phase and the batch print phase:
 - **Back-to-Back Layout Support:** Design Front and Back sides independently on dual canvases, with an interactive preview to check visual alignment.
 - **Built-In Crop & Cutting Markers:** Printable PDFs automatically generate corner crop marks and center trim guides so you know exactly where to cut with a paper cutter.
 - **Built-In Vector Library:** Includes categorized vector icons (contact info, business details, action badges), line nodes, decorative background waves, dot grids, stripes, curves, and 10 geometric shapes (Circle, Oval, Square, Rectangle, Rounded Rect, Triangle, Hexagon, Octagon, Rhombus, Star).
-- **HRIS Data Auto-Mapping:** Import employee lists via JSON or API bearer tokens. Map text layers to fields like `fullName`, `position`, `email`, and `mobile` to batch-generate cards without touching layout files.
+- **Excel & CSV Dataset Ingest:** Download a pre-formatted `.xlsx` spreadsheet template, fill in employee details (First Name, Last Name, Job Title, Department, Mobile, Office Telephone, Email, Website, Company, Address), and upload to instantly batch-generate cards.
+- **HRIS Data Auto-Mapping:** Import employee lists via Excel, JSON, or API bearer tokens. Map text layers to fields like `fullName`, `position`, `email`, `mobile`, `officeTel`, `website`, `company`, and `address` without touching layout files.
 - **Scannable QR Generator:** Real-time generation of vCard 3.0, website URLs, phone call (`tel:`), or email (`mailto:`) QR codes directly on the canvas.
 - **Reliable Native System Printing:** Uses the OS print dialog for reliable driver handling, duplex orientation control, and hardware compatibility.
 
@@ -46,8 +47,8 @@ CCard Studio is built with **Next.js 16 (App Router)**, **Fabric.js v6**, **Taur
 |  - Vector Library & Tagged Roles  |  - Duplex Column Mirroring        |
 |  - Real-Time QR Code Generator    |  - Corner & Center Cut Markers    |
 +-----------------------------------+-----------------------------------+
-|                           Tauri v2 Wrapper                            |
-|                 Native File I/O & System Print Dialog                 |
+|                     Data Ingest & Tauri Wrapper                       |
+|        Excel (.xlsx/csv) / HRIS API / Native Print Dialog             |
 +-----------------------------------------------------------------------+
 ```
 
@@ -57,7 +58,7 @@ The editor runs two separate Fabric.js v6 canvas instances for the front and bac
 
 ```tsx
 export interface FieldRoleConfig {
-  role: 'fullName' | 'position' | 'department' | 'mobile' | 'email' | 'company' | 'custom';
+  role: 'fullName' | 'position' | 'department' | 'mobile' | 'officeTel' | 'email' | 'website' | 'company' | 'address' | 'custom';
   fallbackText: string;
 }
 
@@ -72,7 +73,29 @@ export function applyFieldRoleToCanvasText(textObject: fabric.IText, roleConfig:
 
 During export, the rendering engine substitutes `{{fullName}}` with real employee records while maintaining the exact font family, size, line-height, text alignment, and color defined in the visual editor.
 
-### 2. A4 Grid Population & Duplex Mirroring Math
+### 2. Excel Template Download & Spreadsheet Parsing
+
+To make bulk onboarding easy for HR teams, CCard Studio generates a downloadable `.xlsx` template pre-populated with standard headers and sample data:
+
+```typescript
+import * as XLSX from "xlsx";
+
+export function downloadExcelTemplate() {
+  const worksheet = XLSX.utils.json_to_sheet(EXCEL_SAMPLE_ROWS, {
+    header: [
+      "First Name", "Last Name", "Job Title", "Department",
+      "Email", "Mobile Number", "Office Telephone", "Website", "Company", "Address"
+    ],
+  });
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Employee Calling Cards");
+  XLSX.writeFile(workbook, "CCard_Studio_Employee_Template.xlsx");
+}
+```
+
+Uploaded `.xlsx`, `.xls`, or `.csv` files are parsed client-side using SheetJS with header normalization to map column variations (`Job Title`, `Position`, `Role`, `Telephone`, `Tel`, `Phone`) to internal employee records.
+
+### 3. A4 Grid Population & Duplex Mirroring Math
 
 A standard A4 page (210mm × 297mm) fits 10 standard calling cards (90mm × 54mm) arranged in a 2-column by 5-row layout with margin spacing.
 
@@ -104,13 +127,13 @@ export function calculateDuplexSlot(
 }
 ```
 
-### 3. Cutting Guides & Trim Markers
+### 4. Cutting Guides & Trim Markers
 
 To make cutting 10 cards out of an A4 sheet straightforward, the PDF engine draws hairline crop markers outside each card's border. 
 
 Center tick marks line up between rows and columns, allowing you to align a ruler or paper cutter across the full width of the sheet instead of measuring individual cards.
 
-### 4. Dynamic vCard 3.0 QR Generator
+### 5. Dynamic vCard 3.0 QR Generator
 
 QR codes placed on the canvas render dynamically using `qrcode`. For contact cards, the app formats the current record into vCard 3.0 specification:
 
@@ -130,7 +153,7 @@ export function generateVCardString(employee: EmployeeRecord): string {
 }
 ```
 
-### 5. Transitioning from Silent CLI Printing to Native System Printing
+### 6. Transitioning from Silent CLI Printing to Native System Printing
 
 In v1.1.0, I experimented with background silent printing by executing SumatraPDF in CLI mode. While it sounded great in theory, it introduced annoying edge cases in practice: missing font substitutions, printer driver mismatches, and occasional silent execution hangs across different hardware setups.
 
@@ -144,16 +167,17 @@ In **v1.2.0**, I replaced CLI silent printing with the native OS print workflow.
 | :--- | :--- | :--- |
 | **UI & Shell** | Next.js 16 (App Router), Tailwind CSS v4 | Application layout, panels, modal routes |
 | **Canvas Engine** | Fabric.js v6 | Visual object editor, vector shapes, layers |
+| **Spreadsheet Ingest** | SheetJS (`xlsx`) | Excel (.xlsx/csv) template export & parsing |
 | **Desktop Wrapper** | Tauri v2 (Rust) | Native file picker, local template storage, print IPC |
 | **PDF Renderer** | `@react-pdf/renderer` | Client-side 10-up A4 layout, crop marks, duplex math |
 | **State Management** | Zustand | Canvas undo/redo state, HRIS dataset binding |
 
 ---
 
-## Source Code & Installation
+## Source Code & Web App
 
 CCard Studio is open source under the MIT License.
 
-- **Web App / Landing Page:** [ccard.sanchez.ph](https://ccard.sanchez.ph)
+- **Live Web App:** [ccard.sanchez.ph](https://ccard.sanchez.ph/)
 - **GitHub Repository:** [tildemark/ccard-studio](https://github.com/tildemark/ccard-studio)
 - **Latest Release:** [CCard Studio v1.2.0 Release](https://github.com/tildemark/ccard-studio/releases/tag/v1.2.0)
