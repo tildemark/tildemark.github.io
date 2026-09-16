@@ -52,21 +52,27 @@ You **must** register your next promo *before* your active promo expires down to
 
 Best for short-term needs, quick top-ups, or maximum flexibility.
 
-* **Option A: Standalone Balanced Load — `GoEXTRA99` (₱99 via GCash / GlobeOne)**
-* **Inclusions:** 8 GB open-access data + 4 GB 5G + Unlimited All-Net Calls & Texts.
-* **Verdict:** The standard zero-hassle weekly choice for balanced calls and data.
+#### 🔹 Option A: Standalone Balanced Load — `GoEXTRA99`
+* **Cost:** ₱99 (via GCash or GlobeOne)
+* **Allocations:** 8 GB open-access data + 4 GB 5G + Unlimited All-Net Calls & Texts
+* **Validity:** 7 Days
+> **Verdict:** The standard zero-hassle weekly choice for balanced calls and data.
 
+#### 🔹 Option B: Standalone High-Data Load — `Super Xclusive Go+99`
+* **Cost:** ₱99 (GlobeOne App Exclusive)
+* **Allocations:** 10 GB open-access data + 8 GB app freebie + Unlimited All-Net Calls & Texts
+* **Validity:** 7 Days
+> **Verdict:** The single best value per peso if you load directly inside the GlobeOne app.
 
-* **Option B: Standalone High-Data Load — `Super Xclusive Go+99` (₱99 via GlobeOne App only)**
-* **Inclusions:** 10 GB open-access data + 8 GB app freebie + Unlimited All-Net Calls & Texts.
-* **Verdict:** The single best value per peso if you load directly inside the GlobeOne app.
-
-
-* **Option C: Max-Data & True 5G Combination Stack (₱149 – ₱248 total)**
-* **High-Data Combination (₱248):** Load `Go+149` (12 GB open-access + 8 GB app + 8 GB 5G + Unli Calls), then stack `Super Xclusive Go+99` immediately. Yields up to **46 GB total combined data** + Unlimited Calls & Texts.
-* **True 5G Speed Stack (₱149):** Load `GoEXTRA99` (₱99) for base calls and data, then add **Go5G 50** (₱50 via GlobeOne). Yields **Unlimited 5G Data** (for 3 days) + 12 GB 4G/LTE open-access pool + 7 Days of Unlimited All-Net Calls & Texts.
-
-
+#### 🔹 Option C: Max-Data & True 5G Combination Stack
+* **High-Data Combination (₱248 total):**
+  1. Load `Go+149` (12 GB open-access + 8 GB app + 8 GB 5G + Unli Calls).
+  2. Stack `Super Xclusive Go+99` immediately.
+  * **Result:** Up to **46 GB total combined data** + Unlimited All-Net Calls & Texts.
+* **True 5G Speed Stack (₱149 total):**
+  1. Load `GoEXTRA99` (₱99) for base calls and data.
+  2. Add **Go5G 50** (₱50 via GlobeOne).
+  * **Result:** **Unlimited 5G Data** (for 3 days) + 12 GB 4G/LTE open-access pool + 7 Days of Unlimited All-Net Calls & Texts.
 
 ---
 
@@ -74,22 +80,23 @@ Best for short-term needs, quick top-ups, or maximum flexibility.
 
 Ideal if you prefer updating your balance twice a month instead of every week.
 
-* **Option A: Standalone Single Load — `GoEXTRA199` (₱199 via GCash / GlobeOne)**
-* **Inclusions:** 8 GB open-access data + 8 GB 5G + Unlimited All-Net Calls & Texts for 15 days. Zero maintenance required.
+#### 🔹 Option A: Standalone Single Load — `GoEXTRA199`
+* **Cost:** ₱199 (via GCash or GlobeOne)
+* **Allocations:** 8 GB open-access data + 8 GB 5G + Unlimited All-Net Calls & Texts
+* **Validity:** 15 Days
+> **Verdict:** Straightforward 15-day all-in-one load with zero maintenance required.
 
+#### 🔹 Option B: Bulk Data + Call Extension Combination Stack
+* **Cost:** ₱349 – ₱499 Total
+* **Execution:** Load `GOPLUS250` (15 GB) or `GOPLUS400` (25 GB) for base data, then stack `GoEXTRA99` (₱99) for calls.
+* **Result:** Open-access data pool expands to **23 GB – 33 GB** with a 15-day expiration date.
+> ⚠️ **Clause Warning:** Because `GoEXTRA99`'s call feature only lasts 7 days, your unlimited calling privilege will drop on Day 7 unless you reload another `GoEXTRA99` on Day 7 (or use `GoEXTRA199` from the start).
 
-* **Option B: Bulk Data + Call Extension Combination Stack (₱349 – ₱499 total)**
-* **Execution:** Load `GOPLUS250` (15 GB) or `GOPLUS400` (25 GB) for your base data, then stack `GoEXTRA99` (₱99) for calls.
-* **Result:** Your open-access data balance jumps to 23 GB – 33 GB with a 15-day validity period.
-* ⚠️ **Clause Warning:** Because `GoEXTRA99`'s call feature only lasts 7 days, your unlimited calling privilege will drop on Day 7 unless you load a second `GoEXTRA99` on Day 7 (or use `GoEXTRA199` from the start).
-
-
-* **Option C: Heavy 5G Combination Stack (₱499 total)**
+#### 🔹 Option C: Heavy 5G Combination Stack
+* **Cost:** ₱499 Total
 * **Execution:** Load `GOPLUS400` (25 GB open-access + 15 GB app + 8 GB 5G for 15 Days), then load `GoEXTRA99` (8 GB open-access + 4 GB 5G + Unli Calls for 7 Days).
 * **Result:** Merges into **33 GB open-access data** + **12 GB 5G-only data** valid for 15 days.
-* ⚠️ **Call Clause:** Calls drop after Day 7 unless you reload another `GoEXTRA99` on Day 7.
-
-
+> ⚠️ **Call Clause:** Calling privileges drop after Day 7 unless refreshed on Day 7.
 
 ---
 
@@ -97,28 +104,29 @@ Ideal if you prefer updating your balance twice a month instead of every week.
 
 Best for users who hate manual reloads or want continuous call coverage for a full month.
 
-* **Option A: Standalone Call-Only Base — `GoUNLI350` (₱350 for 30 Days)**
-* **Inclusions:** 3 GB open-access data + Unlimited All-Net Calls & Texts for 30 days.
-* **Best for:** Heavy callers who rely mostly on Wi-Fi and rarely consume mobile data.
+#### 🔹 Option A: Standalone Call-Only Base — `GoUNLI350`
+* **Cost:** ₱350 (Valid for 30 Days)
+* **Allocations:** 3 GB open-access data + Unlimited All-Net Calls & Texts
+> **Verdict:** Best for heavy callers who rely primarily on home/office Wi-Fi and rarely consume cellular data.
 
-
-* **Option B: The "Set & Forget" Base Stack (₱449 Total)**
+#### 🔹 Option B: The "Set & Forget" Base Stack
+* **Cost:** ₱449 Total
 1. **Day 1:** Register `GoUNLI350` (₱350) $\rightarrow$ *Gives 3 GB data + 30 Days of Unlimited All-Net Calls & Texts.*
 2. **Day 1 (Immediately after):** Load `Go+99` (₱99) $\rightarrow$ *Adds 8 GB open-access data.*
-3. **Result:** The 8 GB of open-access data from `Go+99` merges with `GoUNLI350` and **inherits the 30-day expiry**. You get **11 GB total open-access data** + **30 Days of Unlimited Calls & Texts** with zero mid-month management.
+> **Result:** The 8 GB of open-access data from `Go+99` merges with `GoUNLI350` and **inherits the 30-day expiry**. You get **11 GB total open-access data** + **30 Days of Unlimited Calls & Texts** with zero mid-month management.
 
-
-* **Option C: 30-Day Base + 5G Boost Stack (₱499 Total)**
+#### 🔹 Option C: 30-Day Base + 5G Boost Stack
+* **Cost:** ₱499 Total
 1. **Day 1:** Register `GoUNLI350` (₱350) $\rightarrow$ *Gives 3 GB open-access data + 30 Days Unli Calls & Texts.*
 2. **Day 1 (Immediately after):** Load `Go+149` (₱149) $\rightarrow$ *Adds 13 GB open-access + 8 GB app + 8 GB 5G.*
-3. **Result:** Yields **16 GB open-access data** valid for **30 days** + **30 Days Unli Calls** + **8 GB 5G data** (valid for its first 7 days).
+> **Result:** Yields **16 GB open-access data** valid for **30 days** + **30 Days Unli Calls** + **8 GB 5G data** (valid for its first 7 days).
 
-
-* **Option D: The Auto-Renewing Weekly Stack (₱396 Total — Best Overall Value)**
+#### 🔹 Option D: The Auto-Renewing Weekly Stack (Best Overall Value)
+* **Cost:** ₱396 Total (₱99 / week)
 1. Open the **GlobeOne App** and search for `GoEXTRA99`.
 2. Toggle **GoRENEW** on before subscribing.
 3. Globe will automatically reload `GoEXTRA99` (₱99) every 7 days across 4 weeks.
-4. **Result:** **32 GB open-access data** (+ 16 GB 5G) + **28–30 Days of continuous Unlimited Calls & Texts** for just **₱396**. This provides **10x more data** than standalone `GoUNLI350` for practically the same price.
+> **Result:** **32 GB open-access data** (+ 16 GB 5G) + **28–30 Days of continuous Unlimited Calls & Texts** for just **₱396**. This provides **10x more data** than standalone `GoUNLI350` for practically the same price.
 
 
 
