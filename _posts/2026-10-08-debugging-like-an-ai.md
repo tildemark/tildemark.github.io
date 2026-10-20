@@ -2,7 +2,7 @@
 title: "Debugging Like an AI: Advanced Techniques for PHP and TypeScript"
 date: 2026-10-08 08:00:00 +0800
 categories: [Programming, Debugging]
-tags: [git, php, typescript, debugging, docker, codeigniter]
+tags: [git, php, typescript, debugging, docker, codeigniter, ai]
 description: "Learn how AI agents systematically track down hard-to-find bugs, and how you can adopt their techniques to speed up your own development workflow."
 pin: false
 math: true
